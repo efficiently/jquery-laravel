@@ -1,0 +1,37 @@
+{
+    "name": "efficiently/jquery-laravel",
+    "description": "This package provides jQuery and the jQuery-UJS driver for your Laravel 4+ application.",
+    "keywords": [
+        "jquery",
+        "laravel",
+        "larasset",
+        "assets",
+        "asset_pipeline",
+        "pipeline",
+        "javascript",
+        "ujs",
+        "unobtrusive",
+        "ajax"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tortue Torche",
+            "email": "tortuetorche@spam.me"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "~4.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Efficiently\\JqueryLaravel\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

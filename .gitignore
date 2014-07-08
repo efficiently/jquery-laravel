@@ -1,0 +1,7 @@
+/vendor/*
+!/vendor
+!/vendor/assets/
+composer.phar
+composer.lock
+.DS_Store
+/nbproject
