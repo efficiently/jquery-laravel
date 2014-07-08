@@ -22,6 +22,12 @@ minor version bump = minor-level updates to jquery
 major version bump = major-level updates to jquery and updates to laravel which may be backwards-incompatible
 ```
 
+## Prerequisites
+
+You must [install Node](http://nodejs.org) on your computer (development environment).
+
+This package is **only** compatible with **PHP >= 5.4** and **Laravel >= 4.1** framework.
+
 ## Installation
 
 [Laravel](http://laravel.com) apps with [Larasset](https://github.com/efficiently/larasset) package include jquery-laravel by default.
