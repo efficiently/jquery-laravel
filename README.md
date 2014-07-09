@@ -46,49 +46,7 @@ This package is **only** compatible with **PHP >= 5.4** and **Laravel >= 4.1** f
 
 2. Then install Larasset package
 
-    ```sh
-    composer require efficiently/larasset:dev-master
-    ```
-
-    1. Add the service provider of Larasset first *then* the one of this package to `app/config/app.php`:
-
-        ```php
-            'Efficiently\Larasset\LarassetServiceProvider',
-            'Efficiently\JqueryLaravel\JqueryLaravelServiceProvider',
-        ```
-
-    2. Add the alias (facade) to your Laravel app config file:
-
-        ```php
-           'Asset' => 'Efficiently\Larasset\Facades\Asset',
-        ```
-    
-    3.	Turn on your application debug mode, in your `app/config/app.php` file:
-        
-        ```php
-            'debug' => true,
-        ```
-        
-        Note: It is strongly recommended that you turn off error detail in a production environment.
-
-    4. Setup your local environment within the `bootstrap/start.php` file:
-
-        You may determine your computer name using the `hostname` terminal command, then add it like this:
-
-        ```php
-        $env = $app->detectEnvironment(array(
-            'local' => array('your-computer-name'),
-        ));
-        ```
-
-    5. You will need install some [Node.js](http://nodejs.org/) modules in order to run these Larasset commands:
-
-        ```sh
-        npm install -g vendor/efficiently/larasset
-        ```
-
-    6. Then run `php artisan larasset:setup`. The rest of the installation depends on
-    whether the asset pipeline is being used.
+    Click [here](https://github.com/efficiently/larasset/blob/master/README.md#installation) to follow the installation instructions of this package.
 
 ### Laravel 4.1 or greater (with Larasset package *installed*)
 
