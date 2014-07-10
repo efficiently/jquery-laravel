@@ -1,6 +1,6 @@
 {
     "name": "efficiently/jquery-laravel",
-    "description": "This package provides jQuery and the jQuery-UJS driver for your Laravel 4+ application.",
+    "description": "This package provides jQuery and the jQuery-ujs driver for your Laravel 4+ application.",
     "keywords": [
         "jquery",
         "laravel",
@@ -25,6 +25,9 @@
         "illuminate/support": "~4.1"
     },
     "autoload": {
+        "files": [
+            "src/Efficiently/JqueryLaravel/helpers.php"
+        ],
         "psr-0": {
             "Efficiently\\JqueryLaravel\\": "src/"
         }

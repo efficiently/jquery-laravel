@@ -18,7 +18,9 @@ class JqueryLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('efficiently/jquery-laravel');
+		$this->registerBladeExtensions();
+                
+                $this->package('efficiently/jquery-laravel');
 
                 // Add jQuery Laravel assets path to the search paths of Larasset package
                 $packageAssetsPaths = [$this->packagePath()."/vendor/assets/javascripts"];
@@ -32,7 +34,9 @@ class JqueryLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+            $this->app->singleton('html_eloquent_helper', function($app) {
+                return new EloquentHtmlHelper();
+            });
 	}
 
 	/**
@@ -65,6 +69,18 @@ class JqueryLaravelServiceProvider extends ServiceProvider {
        {
            return $this->normalizePath(realpath(__DIR__."/../../.."));
        }
+
+       /**
+        * Register custom blade extensions
+        *
+        * @return void
+        */
+        protected function registerBladeExtensions()
+        {
+           $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
+
+           new BladeExtensions($blade);
+        }
 
 
 }
