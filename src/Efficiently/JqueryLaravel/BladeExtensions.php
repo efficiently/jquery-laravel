@@ -37,20 +37,25 @@ class BladeExtensions
             }
 
             $contentTagsPattern = implode("|", $contentTags);
-            // Convert @<tag>_tag_for to @content_tag_for(object, '<tag>') extension
-            // E.g. "@div_tag_for(object) blabla" becomes "@content_tag_for(object, 'div') blabla"
-            $contentTagsPattern = '/@('.$contentTagsPattern.')_(tag_for)\((.+)\)([\r\n\s\t]+)/';
+            // Convert @<tag>_for to @content_tag_for(object, '<tag>') extension
+            // E.g. "@div_for(object) blabla" becomes "@content_tag_for(object, 'div') blabla"
+            $contentTagsPattern = '/@('.$contentTagsPattern.')_(tag_for|for)\((.+)\)([\r\n\s\t]+)/';
             if (preg_match($contentTagsPattern, $view)) {
-                $replacement = '@content_$2("$1", $3)$4';
+                $replacement = '@content_tag_for("$1", $3)$4';
                 $view = preg_replace($contentTagsPattern, $replacement, $view);
             }
 
             $contentTagsPattern = implode("|", $contentTags);
-            // Convert @end_<tag>_tag and @end_<tag>_tag_for to @endcontent_tag('<tag>') and @endcontent_tag_for('<tag>') extensions
-            // E.g. "blabla @enddiv_tag_for" becomes "blabla @endcontag_tag_for('div')"
-            $contentTagsPattern = '/@end_?('.$contentTagsPattern.')_(tag|tag_for)([\r\n\s\t]+)/';
-            if (preg_match($contentTagsPattern, $view)) {
-                $replacement = '@endcontent_$2("$1")$3';
+            // Convert @end_<tag>_tag and @end_<tag>_for to @endcontent_tag('<tag>') and @endcontent_tag_for('<tag>') extensions
+            // E.g. "blabla @enddiv_for" becomes "blabla @endcontag_tag_for('div')"
+            $contentTagsPattern = '/@end_?('.$contentTagsPattern.')_(tag|tag_for|for)([\r\n\s\t]+)/';
+            if (preg_match($contentTagsPattern, $view, $matches)) {
+                $type = array_get($matches, 2);
+                // dd($type);//debug
+                if ($type === 'for') {
+                    $type = 'tag_'.$type;
+                }
+                $replacement = '@endcontent_'.$type.'("$1")$3';
                 $view = preg_replace($contentTagsPattern, $replacement, $view);
             }
 
