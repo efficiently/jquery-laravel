@@ -71,6 +71,6 @@ class EloquentHtmlHelper
      */
     protected function modelNameFromRecordOrClassname($recordOrClass)
     {
-        return is_string($recordOrClass) ? $recordOrClass : get_classname($recordOrClass);
+        return is_string($recordOrClass) ? $recordOrClass : get_class($recordOrClass);
     }
 }
