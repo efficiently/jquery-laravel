@@ -84,6 +84,6 @@ if (! function_exists('render_view')) {
      */
     function render_view($route, $parameters = [])
     {
-        return $__env->make($route, $parameters, array_except(get_defined_vars(), ['__data', '__path']))->render();
+        return View::make($route, $parameters, array_except(get_defined_vars(), ['__data', '__path']))->render();
     }
 }
