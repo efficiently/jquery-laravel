@@ -34,8 +34,53 @@ if (! function_exists('form_id')) {
     }
 }
 
-// if (! function_exists('former_for')) {
+if (! function_exists('form_for')) {
 
+    /**
+     * Create a new model based form builder.
+     *
+     * Based on \Form::model() with default 'id' and 'class' HTML attributes
+     * get with form_id() and dom_class() helpers
+     *
+     * @param mixed   $model
+     * @param array   $options
+     * @param  string $fallbackPrefix By default it's 'create'
+     * @return string
+     */
+    function form_for($model, array $options = [])
+    {
+        $prefix = array_get($options, 'prefix');
+        $fallbackPrefix = array_get($options, 'fallbackPrefix', 'create');
+        
+        if (! array_get($options, 'id')) {
+            $options['id'] = form_id($model, $fallbackPrefix);
+        }
+        
+        if (! array_get($options, 'class')) {
+            $options['class'] = dom_class($model, $prefix, $fallbackPrefix);
+        }
+        
+        return Form::model($model, $options);
+    }
+}
+
+if (! function_exists('form_for_close')) {
+
+    /**
+     * Close the current form.
+     *
+     * Alias of \Form::close()
+     *
+     * @return string
+     */
+    function form_for_close()
+    {
+        return Form::close();
+    }
+}
+
+// if (! function_exists('former_for')) {
+//
 //     function former_for()
 //     {
 //         // TODO
@@ -74,7 +119,7 @@ if (! function_exists('render_view')) {
 
     /**
      * Render a view, useful in your Blade templates
-     
+     *
      * {{ render_view('view.name') }}
      * {{ render_view('view.name', ['some'=>'data']) }}
      *
