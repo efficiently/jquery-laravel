@@ -51,7 +51,6 @@ class BladeExtensions
             $contentTagsPattern = '/@end_?('.$contentTagsPattern.')_(tag|tag_for|for)([\r\n\s\t]+)/';
             if (preg_match($contentTagsPattern, $view, $matches)) {
                 $type = array_get($matches, 2);
-                // dd($type);//debug
                 if ($type === 'for') {
                     $type = 'tag_'.$type;
                 }
@@ -91,7 +90,7 @@ class BladeExtensions
                     $attributes = preg_split('/\s?,\s?/', array_get($result, 1, []));
                     $tagName = array_get(array_filter($attributes), 0, "'div'");
                     $record = array_get($attributes, 1);
-                    $prefix = array_get($attributes, 2);
+                    $prefix = array_get($attributes, 2, "null");
                     $options = count($attributes) >= 4 ? implode(array_slice($attributes, 3), ',') : "[]";
 
                     $asOption = preg_split('/, */', array_get($result, 3));
