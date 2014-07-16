@@ -69,3 +69,21 @@ if (! function_exists('dom_class')) {
         return Efficiently\JqueryLaravel\Facades\HTMLEloquentHelper::domClass($recordOrClass, $prefix, $fallbackPrefix);
     }
 }
+
+if (! function_exists('render_view')) {
+
+    /**
+     * Render a view, useful in your Blade templates
+     
+     * {{ render_view('view.name') }}
+     * {{ render_view('view.name', ['some'=>'data']) }}
+     *
+     * @param  string  $route Route name
+     * @param  array   $parameters Optional array of data to the rendered view
+     * @return string
+     */
+    function render_view($route, $parameters = [])
+    {
+        return $__env->make($route, $parameters, array_except(get_defined_vars(), ['__data', '__path']))->render();
+    }
+}
