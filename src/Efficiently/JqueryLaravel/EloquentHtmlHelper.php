@@ -16,7 +16,6 @@ class EloquentHtmlHelper
         if ($recordId = $this->recordKeyForDomId($record)) {
             return $this->domClass($record, $prefix, $fallbackPrefix).'_'.$recordId;
         } else {
-            $prefix = $prefix ?: $fallbackPrefix;
             return $this->domClass($record, $prefix, $fallbackPrefix);
         }
     }
@@ -61,6 +60,8 @@ class EloquentHtmlHelper
     public function domClass($recordOrClass, $prefix = null, $fallbackPrefix = 'create')
     {
         $singular = snake_case(camel_case(preg_replace('/\\\\/',' ', $this->modelNameFromRecordOrClassname($recordOrClass))));
+
+        $prefix = $prefix ?: $fallbackPrefix;
 
         return $prefix ? $prefix.'_'.$singular : $singular;
     }
