@@ -214,10 +214,16 @@ if (! function_exists('render_view')) {
      *
      * @param  string  $route Route name
      * @param  array   $parameters Optional array of data to the rendered view
+     * @param  string  $section Section name to yield
      * @return string
      */
-    function render_view($route, $parameters = [])
+    function render_view($route, $parameters = [], $section = null)
     {
-        return View::make($route, $parameters, array_except(get_defined_vars(), ['__data', '__path']))->render();
+        $view =  View::make($route, $parameters, array_except(get_defined_vars(), ['__data', '__path']))->render();
+        if ($section) {
+            $view = $view.View::yieldContent($section);
+        }
+        
+        return $view;
     }
 }
