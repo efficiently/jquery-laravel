@@ -44,6 +44,13 @@ if (! function_exists('form_for')) {
      * get with form_id() and dom_class() helpers
      *
      * @param mixed   $model
+     * @param array   $options $options There are a few special options:
+     * 'url' - open forms that point to named URL. E.G. ['url' => 'foo/bar']
+     * 'route' - open forms that point to named routes. E.G. ['route' => 'route.name']
+     * 'action' - open forms that point to controller actions. E.G. ['action' => 'Controller@method']
+     * 'method' - HTTP verb. Supported verbs are 'post', 'get', 'delete', 'patch', and 'put'. By default it will be 'post'.
+     * 'data-remote' - If set to true, will allow the Unobtrusive JavaScript drivers to control the submit behavior. By default this behavior is an ajax submit.
+     * 'fallbackPrefix' - By default it will be 'create'.
      * @return string
      */
     function form_for($model, array $options = [])
@@ -58,6 +65,11 @@ if (! function_exists('form_for')) {
         if (! array_get($options, 'class')) {
             $prefix = $prefix ?: $model->exists ? 'edit' : 'create';
             $options['class'] = dom_class($model, $prefix);
+        }
+        
+       if (! array_get($options, 'route') && ! array_get($options, 'url') && ! array_get($options, 'action')) {
+            $routePrefix = str_plural(dom_class($model));
+            $options['route'] = $model->exists ? [$routePrefix.'.update', $model->id] : $routePrefix.'.store';
         }
         
         if (! array_get($options, 'method')) {
@@ -92,6 +104,13 @@ if (! function_exists('former_for')) {
      * get with form_id() and dom_class() helpers
      *
      * @param mixed  $model
+     * @param array  $options There are a few special options:
+     * 'action' - open forms that point to named URL. E.G. ['action' => 'foo/bar']
+     * 'route' - open forms that point to named routes. E.G. ['route' => 'route.name']
+     * 'controller' - open forms that point to controller actions. E.G. ['controller' => 'Controller@method']
+     * 'method' - HTTP verb. Supported verbs are 'post', 'get', 'delete', 'patch', and 'put'. By default it will be 'post'.
+     * 'data-remote' - If set to true, will allow the Unobtrusive JavaScript drivers to control the submit behavior. By default this behavior is an ajax submit.
+     * 'fallbackPrefix' - By default it will be 'create'.
      * @return \Former|string|null
      */
     function former_for($model, array $options = [])
@@ -109,14 +128,40 @@ if (! function_exists('former_for')) {
                 $options['class'] = dom_class($model, $prefix);
             }
             
+            if (is_null(array_get($options, 'route')) && is_null(array_get($options, 'action')) && is_null(array_get($options, 'controller'))) {
+                $routePrefix = str_plural(dom_class($model));
+                $options['route'] = $model->exists ? [$routePrefix.'.update', $model->id] : $routePrefix.'.store';
+            }
+            
             if (! array_get($options, 'method')) {
                 $options['method'] = $model->exists ? 'patch' : 'post';
             }
             
             $class = array_pull($options, 'class');
             $method = array_pull($options, 'method');
+            
+            $actionType = null;
+            $action = null;
+            if (array_get($options, 'action')) {
+                $actionType = 'action';
+                $action = array_pull($options, 'action');
+            } elseif (array_get($options, 'controller')) {
+                $actionType = 'controller';
+                $action = array_pull($options, 'controller');
+            } elseif (array_get($options, 'route')) {
+                $actionType = 'route';
+                $action = array_pull($options, 'route');
+            } else {
+                // throw Exception('No action, controller or route given for the current form!');
+            }
+            
+            $result = Former::open()->method($method)->addClass($class)->setAttributes($options);
+            
+            if ($actionType) {
+                $result = call_user_func_array([$result, $actionType], (array) $action);
+            }
         
-            return Former::open()->method($method)->addClass($class)->setAttributes($options);         
+            return $result;         
         }
     }
 }
@@ -179,7 +224,7 @@ if (! function_exists('button_to')) {
      * @param array  $options There are a few special options:
      * 'url' - open forms that point to named URL. E.G. ['url' => 'foo/bar']
      * 'route' - open forms that point to named routes. E.G. ['route' => 'route.name']
-     * 'action' -  - open forms that point to controller actions. E.G. ['action' => 'Controller@method']
+     * 'action' - open forms that point to controller actions. E.G. ['action' => 'Controller@method']
      * 'method' - HTTP verb. Supported verbs are 'post', 'get', 'delete', 'patch', and 'put'. By default it will be 'post'.
      * 'data-remote' - If set to true, will allow the Unobtrusive JavaScript drivers to control the submit behavior. By default this behavior is an ajax submit.
      * 'form' - This array will be form attributes
