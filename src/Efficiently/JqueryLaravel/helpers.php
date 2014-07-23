@@ -227,3 +227,19 @@ if (! function_exists('render_view')) {
         return $view;
     }
 }
+
+if (! function_exists('csrf_meta_tags')) {
+
+    /**
+     * Returns meta tags “csrf-param” and “csrf-token” 
+     * with the name of the cross-site request forgery protection
+     * parameter and token, respectively.
+     *
+     * @return string
+     */
+    function csrf_meta_tags()
+    {
+        return '<meta content="_token" name="csrf-param">'.PHP_EOL.
+            '<meta content="'.csrf_token().'" name="csrf-token">'.PHP_EOL;
+    }  
+}
