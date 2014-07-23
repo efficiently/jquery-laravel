@@ -40,7 +40,7 @@ if (! function_exists('form_for')) {
      * Create a new model based form builder.
      * And adding a CSRF Token
      *
-     * Based on \Form::model() with default 'id' and 'class' HTML attributes
+     * Based on \Form::model() with default 'id', 'class' and 'method' HTML attributes
      * get with form_id() and dom_class() helpers
      *
      * @param mixed   $model
@@ -59,6 +59,10 @@ if (! function_exists('form_for')) {
         if (! array_get($options, 'class')) {
             $prefix = $prefix ?: $model->exists ? 'edit' : 'create';
             $options['class'] = dom_class($model, $prefix, $fallbackPrefix);
+        }
+        
+        if (! array_get($options, 'method')) {
+            $options['method'] = $model->exists ? 'patch' : 'post';
         }
         
         return Form::model($model, $options);
@@ -85,7 +89,7 @@ if (! function_exists('former_for')) {
     /**
      * Create a new model based former builder.
      *
-     * Based on \Former::open() with default 'id' and 'class' HTML attributes
+     * Based on \Former::open() with default 'id', 'class' and 'method' HTML attributes
      * get with form_id() and dom_class() helpers
      *
      * @param mixed  $model
@@ -107,10 +111,14 @@ if (! function_exists('former_for')) {
                 $options['class'] = dom_class($model, $prefix, $fallbackPrefix);
             }
             
-            // $id = array_pull($options, 'id');
+            if (! array_get($options, 'method')) {
+                $options['method'] = $model->exists ? 'patch' : 'post';
+            }
+            
             $class = array_pull($options, 'class');
+            $method = array_pull($options, 'method');
         
-            return Former::open()/*->id($id)*/->addClass($class)->setAttributes($options);         
+            return Former::open()->method($method)->addClass($class)->setAttributes($options);         
         }
     }
 }
