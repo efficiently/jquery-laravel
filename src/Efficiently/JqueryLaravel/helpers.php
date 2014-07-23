@@ -57,6 +57,7 @@ if (! function_exists('form_for')) {
         }
         
         if (! array_get($options, 'class')) {
+            $prefix = $prefix ?: $model->exists ? 'edit' : 'create';
             $options['class'] = dom_class($model, $prefix, $fallbackPrefix);
         }
         
@@ -102,6 +103,7 @@ if (! function_exists('former_for')) {
             }
             
             if (! array_get($options, 'class')) {
+                $prefix = $prefix ?: $model->exists ? 'edit' : 'create';
                 $options['class'] = dom_class($model, $prefix, $fallbackPrefix);
             }
             
