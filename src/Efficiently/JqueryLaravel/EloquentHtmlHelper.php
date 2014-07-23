@@ -14,10 +14,10 @@ class EloquentHtmlHelper
     public function domId($record, $prefix = null, $fallbackPrefix = 'create')
     {
         if ($recordId = $this->recordKeyForDomId($record)) {
-            return $this->domClass($record, $prefix, $fallbackPrefix).'_'.$recordId;
+            return $this->domClass($record, $prefix).'_'.$recordId;
         } else {
             $prefix = $prefix ?: $fallbackPrefix;
-            return $this->domClass($record, $prefix, $fallbackPrefix);
+            return $this->domClass($record, $prefix);
         }
     }
 
@@ -33,7 +33,7 @@ class EloquentHtmlHelper
     public function formId($record, $fallbackPrefix = 'create')
     {
         if ($recordId = $this->recordKeyForDomId($record)) {
-            return $this->domClass($record, 'edit', $fallbackPrefix).'_'.$recordId;
+            return $this->domClass($record, 'edit').'_'.$recordId;
         } else {
             return $this->domClass($record, $fallbackPrefix);
         }
@@ -55,10 +55,9 @@ class EloquentHtmlHelper
      *
      * @param  string|object|\Illuminate\Database\Eloquent\Model $recordOrClass
      * @param  string  $prefix
-     * @param  string  $fallbackPrefix By default it's 'create'
      * @return string
      */
-    public function domClass($recordOrClass, $prefix = null, $fallbackPrefix = 'create')
+    public function domClass($recordOrClass, $prefix = null)
     {
         $singular = snake_case(camel_case(preg_replace('/\\\\/',' ', $this->modelNameFromRecordOrClassname($recordOrClass))));
 

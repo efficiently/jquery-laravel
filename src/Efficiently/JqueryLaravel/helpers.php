@@ -44,7 +44,6 @@ if (! function_exists('form_for')) {
      * get with form_id() and dom_class() helpers
      *
      * @param mixed   $model
-     * @param array   $options 'fallbackPrefix' option is 'create' by default
      * @return string
      */
     function form_for($model, array $options = [])
@@ -58,7 +57,7 @@ if (! function_exists('form_for')) {
         
         if (! array_get($options, 'class')) {
             $prefix = $prefix ?: $model->exists ? 'edit' : 'create';
-            $options['class'] = dom_class($model, $prefix, $fallbackPrefix);
+            $options['class'] = dom_class($model, $prefix);
         }
         
         if (! array_get($options, 'method')) {
@@ -93,7 +92,6 @@ if (! function_exists('former_for')) {
      * get with form_id() and dom_class() helpers
      *
      * @param mixed  $model
-     * @param array  $options 'fallbackPrefix' option is 'create' by default
      * @return \Former|string|null
      */
     function former_for($model, array $options = [])
@@ -108,7 +106,7 @@ if (! function_exists('former_for')) {
             
             if (! array_get($options, 'class')) {
                 $prefix = $prefix ?: $model->exists ? 'edit' : 'create';
-                $options['class'] = dom_class($model, $prefix, $fallbackPrefix);
+                $options['class'] = dom_class($model, $prefix);
             }
             
             if (! array_get($options, 'method')) {
@@ -161,12 +159,11 @@ if (! function_exists('dom_class')) {
      *
      * @param  string|object|\Illuminate\Database\Eloquent\Model $recordOrClass
      * @param  string  $prefix
-     * @param  string  $fallbackPrefix By default it's 'create'
      * @return string
      */
-    function dom_class($recordOrClass, $prefix = null, $fallbackPrefix = 'create')
+    function dom_class($recordOrClass, $prefix = null)
     {
-        return Efficiently\JqueryLaravel\Facades\HTMLEloquentHelper::domClass($recordOrClass, $prefix, $fallbackPrefix);
+        return Efficiently\JqueryLaravel\Facades\HTMLEloquentHelper::domClass($recordOrClass, $prefix);
     }
 }
 
