@@ -74,7 +74,7 @@ class BladeExtensions
             // Converts @endcontent_tag extension in PHP code equivalent
             $pattern = '/@end_?content_?tag\s?(\(([^\r\n]+?)\)|[\r\n\s\t]*)([\r\n\s\t]+)/s';
             if (preg_match_all($pattern, $view, $results, PREG_SET_ORDER)) {
-               foreach ($results as $index => $result) {
+                foreach ($results as $index => $result) {
                     $attributes = preg_split('/\s?,\s?/', array_get($result, 2, []));
                     $tagName = array_get(array_filter($attributes), 0, "'div'");
 
@@ -125,7 +125,7 @@ EOT;
             // Converts @endcontent_tag_for extension in PHP code equivalent
             $pattern = '/@end_?content_?tag_?for\s?(\(([^\r\n]+?)\)|[\r\n\s\t]*)([\r\n\s\t]+)/s';
             if (preg_match_all($pattern, $view, $results, PREG_SET_ORDER)) {
-               foreach ($results as $index => $result) {
+                foreach ($results as $index => $result) {
                     $attributes = preg_split('/\s?,\s?/', array_get($result, 2, []));
                     $tagName = array_get(array_filter($attributes), 0, "'div'");
 

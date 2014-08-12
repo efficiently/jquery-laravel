@@ -2,6 +2,7 @@
 
 class EloquentHtmlHelper
 {
+
     /**
      * The DOM id convention is to use the singular form of an object or class with the id following an underscore.
      * If no id is found, prefix with “create_” instead.
@@ -59,7 +60,7 @@ class EloquentHtmlHelper
      */
     public function domClass($recordOrClass, $prefix = null)
     {
-        $singular = snake_case(camel_case(preg_replace('/\\\\/',' ', $this->modelNameFromRecordOrClassname($recordOrClass))));
+        $singular = snake_case(camel_case(preg_replace('/\\\\/', ' ', $this->modelNameFromRecordOrClassname($recordOrClass))));
 
         return $prefix ? $prefix.'_'.$singular : $singular;
     }

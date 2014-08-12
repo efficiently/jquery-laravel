@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class HTMLEloquentHelper extends Facade {
+class HTMLEloquentHelper extends Facade
+{
 
     protected static function getFacadeAccessor()
     {

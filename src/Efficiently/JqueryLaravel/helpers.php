@@ -57,25 +57,25 @@ if (! function_exists('form_for')) {
     {
         $prefix = array_get($options, 'prefix');
         $fallbackPrefix = array_get($options, 'fallbackPrefix', 'create');
-        
+
         if (! array_get($options, 'id')) {
             $options['id'] = form_id($model, $fallbackPrefix);
         }
-        
+
         if (! array_get($options, 'class')) {
             $prefix = $prefix ?: $model->exists ? 'edit' : 'create';
             $options['class'] = dom_class($model, $prefix);
         }
-        
-       if (! array_get($options, 'route') && ! array_get($options, 'url') && ! array_get($options, 'action')) {
+
+        if (! array_get($options, 'route') && ! array_get($options, 'url') && ! array_get($options, 'action')) {
             $routePrefix = str_plural(dom_class($model));
             $options['route'] = $model->exists ? [$routePrefix.'.update', $model->id] : $routePrefix.'.store';
         }
-        
+
         if (! array_get($options, 'method')) {
             $options['method'] = $model->exists ? 'patch' : 'post';
         }
-        
+
         return Form::model($model, $options);
     }
 }
@@ -118,28 +118,28 @@ if (! function_exists('former_for')) {
         if (class_exists("\Former")) {
             $prefix = array_get($options, 'prefix');
             $fallbackPrefix = array_get($options, 'fallbackPrefix', 'create');
-            
+
             if (! array_get($options, 'id')) {
                 $options['id'] = form_id($model, $fallbackPrefix);
             }
-            
+
             if (! array_get($options, 'class')) {
                 $prefix = $prefix ?: $model->exists ? 'edit' : 'create';
                 $options['class'] = dom_class($model, $prefix);
             }
-            
+
             if (is_null(array_get($options, 'route')) && is_null(array_get($options, 'action')) && is_null(array_get($options, 'controller'))) {
                 $routePrefix = str_plural(dom_class($model));
                 $options['route'] = $model->exists ? [$routePrefix.'.update', $model->id] : $routePrefix.'.store';
             }
-            
+
             if (! array_get($options, 'method')) {
                 $options['method'] = $model->exists ? 'patch' : 'post';
             }
-            
+
             $class = array_pull($options, 'class');
             $method = array_pull($options, 'method');
-            
+
             $actionType = null;
             $action = null;
             if (array_get($options, 'action')) {
@@ -151,22 +151,20 @@ if (! function_exists('former_for')) {
             } elseif (array_get($options, 'route')) {
                 $actionType = 'route';
                 $action = array_pull($options, 'route');
-            } else {
-                // throw Exception('No action, controller or route given for the current form!');
             }
-            
+
             $result = Former::open()->method($method)->addClass($class)->setAttributes($options);
-            
+
             if ($actionType) {
                 $result = call_user_func_array([$result, $actionType], (array) $action);
             }
-        
-            return $result;         
+
+            return $result;
         }
     }
 }
 
-if (! function_exists('former_for_close'))  {
+if (! function_exists('former_for_close')) {
 
     /**
      * Adding a CSRF Token and close the current form.
@@ -219,7 +217,7 @@ if (! function_exists('button_to')) {
      * Generates a form containing a single button that submits to the URL created by the set of options.
      *
      * Based on \Form::open(), \Form::submit() and \Form::close()
-     * 
+     *
      * @param string $name
      * @param array  $options There are a few special options:
      * 'url' - open forms that point to named URL. E.G. ['url' => 'foo/bar']
@@ -233,7 +231,7 @@ if (! function_exists('button_to')) {
      */
     function button_to($name, array $options = [])
     {
-     
+
         $formOptions = [
             'method' => array_pull($options, 'method', 'post'),
             'class' => array_pull($options, 'formClass', 'button_to')
@@ -275,7 +273,7 @@ if (! function_exists('render_view')) {
         if ($section) {
             $view = $view.View::yieldContent($section);
         }
-        
+
         return $view;
     }
 }
@@ -283,7 +281,7 @@ if (! function_exists('render_view')) {
 if (! function_exists('csrf_meta_tags')) {
 
     /**
-     * Returns meta tags “csrf-param” and “csrf-token” 
+     * Returns meta tags “csrf-param” and “csrf-token”
      * with the name of the cross-site request forgery protection
      * parameter and token, respectively.
      *
@@ -293,5 +291,5 @@ if (! function_exists('csrf_meta_tags')) {
     {
         return '<meta content="_token" name="csrf-param">'.PHP_EOL.
             '<meta content="'.csrf_token().'" name="csrf-token">'.PHP_EOL;
-    }  
+    }
 }
