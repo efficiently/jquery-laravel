@@ -6,20 +6,20 @@ This package provides:
 
   * jQuery 1.11.1
   * the jQuery UJS adapter
-  
+
   TODO:
-  
+
   * assert_select_jquery to test jQuery responses in PHP tests
 
 ## Versions
 
-The jquery-laravel package follows these version guidelines
-to provide more control over your app's jquery version from your `composer.json` file:
+The `jquery-laravel` package follows these version guidelines
+to provide more control over your app's jQuery version from your `composer.json` file:
 
 ```
-patch version bump = updates to jquery-ujs, jquery-laravel, and patch-level updates to jquery
-minor version bump = minor-level updates to jquery
-major version bump = major-level updates to jquery and updates to laravel which may be backwards-incompatible
+patch version bump = updates to jquery-ujs, jquery-laravel, and patch-level updates to jQuery
+minor version bump = minor-level updates to jQuery
+major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
 
 ## Prerequisites
@@ -30,9 +30,9 @@ This package is **only** compatible with **PHP >= 5.4** and **Laravel >= 4.1** f
 
 ## Installation
 
-[Laravel](http://laravel.com) apps with [Larasset](https://github.com/efficiently/larasset) package include jquery-laravel by default.
+[Laravel](http://laravel.com) apps with [Larasset](https://github.com/efficiently/larasset) package include `jquery-laravel` by default.
 
-1. So just make a new app 
+1. So just make a new app
 
     ```sh
     composer create-project laravel/laravel your-project-name --prefer-dist
@@ -48,9 +48,7 @@ This package is **only** compatible with **PHP >= 5.4** and **Laravel >= 4.1** f
 
     Click [here](https://github.com/efficiently/larasset/blob/master/README.md#installation) to follow the installation instructions of this package.
 
-### Laravel 4.1 or greater (with Larasset package *installed*)
-
-The jquery and jquery-ujs files will be added to the asset pipeline and available for you to use.
+NOTE: The `jquery.js` and `jquery-ujs.js` files will be added to the asset pipeline and available for you to use.
 If they're not already in `app/assets/javascripts/application.js` by default, add these lines:
 
 ```js
@@ -62,9 +60,13 @@ If they're not already in `app/assets/javascripts/application.js` by default, ad
 
 Feel free to open an issue ticket if you find something that could be improved. A couple notes:
 
-* If it's an issue pertaining to the jquery-ujs javascript, please report it to the [jquery-ujs project](https://github.com/rails/jquery-ujs).
+* If it's an issue pertaining to the `jquery-ujs` javascript, please report it to the [jquery-ujs project](https://github.com/rails/jquery-ujs).
 
-* If the jquery scripts are outdated (i.e. maybe a new version of jquery was released yesterday), feel free to open an issue and prod us to get that thing updated. However, for security reasons, we won't be accepting pull requests with updated jquery scripts.
+* If the jQuery scripts are outdated (i.e. maybe a new version of jQuery was released yesterday), feel free to open an issue and prod us to get that thing updated. However, for security reasons, we won't be accepting pull requests with updated jQuery scripts.
+
+## Credits
+
+This package is a port of the [jquery-rails](https://github.com/rails/jquery-rails) gem from the Ruby on Rails framework.
 
 ## Acknowledgements
 
