@@ -24,7 +24,7 @@ class JqueryLaravelServiceProvider extends ServiceProvider
                 $this->package('efficiently/jquery-laravel');
 
                 // Add jQuery Laravel assets path to the search paths of Larasset package
-                $packageAssetsPaths = [$this->packagePath()."/vendor/assets/javascripts"];
+                $packageAssetsPaths = [$this->packagePath()."/provider/assets/javascripts"];
                 $this->app->config->set('larasset::paths', array_merge($packageAssetsPaths, $this->app->config->get('larasset::paths', [])));
     }
 
