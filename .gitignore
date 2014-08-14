@@ -1,6 +1,4 @@
-/vendor/*
-!/vendor
-!/vendor/assets/
+/vendor
 composer.phar
 composer.lock
 .DS_Store
