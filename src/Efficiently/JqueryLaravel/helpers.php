@@ -110,6 +110,7 @@ if (! function_exists('former_for')) {
      * 'controller' - open forms that point to controller actions. E.G. ['controller' => 'Controller@method']
      * 'method' - HTTP verb. Supported verbs are 'post', 'get', 'delete', 'patch', and 'put'. By default it will be 'post'.
      * 'data-remote' - If set to true, will allow the Unobtrusive JavaScript drivers to control the submit behavior. By default this behavior is an ajax submit.
+     * 'open' - Form type. Supported values are 'horizontal_open', 'vertical_open', 'inline_open', 'search_open', 'secure_open', 'open_for_files', 'open'. By default it will be 'open'.
      * 'fallbackPrefix' - By default it will be 'create'.
      * @return \Former|string|null
      */
@@ -153,11 +154,16 @@ if (! function_exists('former_for')) {
                 $action = array_pull($options, 'route');
             }
 
-            $result = Former::open()->method($method)->addClass($class)->setAttributes($options);
+            $open = array_pull($options, 'open', 'open');
+
+            $former = app('former');
+
+            $result = $former->$open();
 
             if ($actionType) {
                 $result = call_user_func_array([$result, $actionType], (array) $action);
             }
+            $result = $result->method($method)->addClass($class)->setAttributes($options);
 
             return $result;
         }
