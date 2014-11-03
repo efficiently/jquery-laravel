@@ -104,8 +104,8 @@ class BladeExtensions
                     $replacement = <<<EOT
 <?php
     \${$recordName}Record = $record;
-    if (! is_a(\${$recordName}Record, "\Illuminate\Database\Eloquent\Collection")) {
-        \${$recordName}Record = new \Illuminate\Database\Eloquent\Collection([\${$recordName}Record]);
+    if (! is_a(\${$recordName}Record, "\Illuminate\Support\Collection")) {
+        \${$recordName}Record = new \Illuminate\Support\Collection([\${$recordName}Record]);
     }
     \${$recordIndex} = -1;// -1 because we increment index at the beginnning of the loop
     \${$recordName}Record->each(function(\${$recordName}) use(\$__env, &\${$recordIndex}){
