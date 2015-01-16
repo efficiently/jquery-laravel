@@ -260,7 +260,16 @@ if (! function_exists('button_to')) {
         }
         $formOptions = array_merge($formOptions, array_pull($options, 'form', []));
 
-        return Form::open($formOptions).'<div>'.Form::submit($name, $options).'</div>'.Form::close();
+        $submitButton = Form::submit($name, $options);
+        if (
+            class_exists('Button') &&
+            is_a(new Button, '\Illuminate\Support\Facades\Facade') &&
+            method_exists(Button::getFacadeRoot(), 'withValue')
+        ) {
+            $submitButton = Button::withValue($name)->withAttributes($options)->submit();
+        }
+
+        return Form::open($formOptions).'<div>'.$submitButton.'</div>'.Form::close();
     }
 }
 
