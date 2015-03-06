@@ -43,8 +43,8 @@ if (! function_exists('form_for')) {
      * Based on \Form::model() with default 'id', 'class' and 'method' HTML attributes
      * get with form_id() and dom_class() helpers
      *
-     * @param mixed   $model
-     * @param array   $options $options There are a few special options:
+     * @param mixed $model
+     * @param array $options $options There are a few special options:
      * 'url' - open forms that point to named URL. E.G. ['url' => 'foo/bar']
      * 'route' - open forms that point to named routes. E.G. ['route' => 'route.name']
      * 'action' - open forms that point to controller actions. E.G. ['action' => 'Controller@method']
@@ -68,6 +68,7 @@ if (! function_exists('form_for')) {
         }
 
         if (! array_get($options, 'route') && ! array_get($options, 'url') && ! array_get($options, 'action')) {
+            // FIXME: ? If a model have a sub namespace dom_class('App\Products\Item') => the route prefix will be 'products_items'
             $routePrefix = str_plural(dom_class($model));
             $options['route'] = $model->exists ? [$routePrefix.'.update', $model->id] : $routePrefix.'.store';
         }
@@ -76,7 +77,7 @@ if (! function_exists('form_for')) {
             $options['method'] = $model->exists ? 'patch' : 'post';
         }
 
-        return Form::model($model, $options);
+        return app('form')->model($model, $options);
     }
 }
 
@@ -91,7 +92,7 @@ if (! function_exists('form_for_close')) {
      */
     function form_for_close()
     {
-        return Form::close();
+        return app('form')->close();
     }
 }
 
@@ -103,8 +104,8 @@ if (! function_exists('former_for')) {
      * Based on \Former::open() with default 'id', 'class' and 'method' HTML attributes
      * get with form_id() and dom_class() helpers
      *
-     * @param mixed  $model
-     * @param array  $options There are a few special options:
+     * @param mixed $model
+     * @param array $options There are a few special options:
      * 'action' - open forms that point to named URL. E.G. ['action' => 'foo/bar']
      * 'route' - open forms that point to named routes. E.G. ['route' => 'route.name']
      * 'controller' - open forms that point to controller actions. E.G. ['controller' => 'Controller@method']
@@ -260,7 +261,7 @@ if (! function_exists('button_to')) {
         }
         $formOptions = array_merge($formOptions, array_pull($options, 'form', []));
 
-        $submitButton = Form::submit($name, $options);
+        $submitButton = app('form')->submit($name, $options);
         if (
             class_exists('Button') &&
             is_a(new Button, '\Illuminate\Support\Facades\Facade') &&
@@ -269,7 +270,7 @@ if (! function_exists('button_to')) {
             $submitButton = Button::withValue($name)->withAttributes($options)->submit();
         }
 
-        return Form::open($formOptions).'<div>'.$submitButton.'</div>'.Form::close();
+        return app('form')->open($formOptions).'<div>'.$submitButton.'</div>'.app('form')->close();
     }
 }
 
@@ -278,8 +279,8 @@ if (! function_exists('render_view')) {
     /**
      * Render a view, useful in your Blade templates
      *
-     * {{ render_view('view.name') }}
-     * {{ render_view('view.name', ['some'=>'data']) }}
+     * {!! render_view('view.name') !!}
+     * {!! render_view('view.name', ['some'=>'data']) !!}
      *
      * @param  string  $route Route name
      * @param  array   $parameters Optional array of data to the rendered view
@@ -288,7 +289,7 @@ if (! function_exists('render_view')) {
      */
     function render_view($route, $parameters = [], $section = null)
     {
-        $view =  View::make($route, $parameters, array_except(get_defined_vars(), ['__data', '__path']))->render();
+        $view = view($route, $parameters, array_except(get_defined_vars(), ['__data', '__path']))->render();
         if ($section) {
             $view = $view.View::yieldContent($section);
         }

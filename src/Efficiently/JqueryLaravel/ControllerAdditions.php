@@ -27,12 +27,12 @@ trait ControllerAdditions
         }
 
         if (is_string($view)) {
-            $view = View::make($view, $data);
+            $view = view($view, $data);
         }
 
         // short circuit
         if ($format) {
-            $response = Response::make($view);
+            $response = response($view);
             $response->header('Content-Type', Request::getMimeType($format));
 
             return $response;
@@ -50,5 +50,31 @@ trait ControllerAdditions
         } else {
             return $view;
         }
+    }
+
+    /**
+     * Setup the layout used by the controller.
+     *
+     * @return void
+     */
+    protected function setupLayout()
+    {
+        if (! is_null($this->layout)) {
+            $this->layout = view($this->layout);
+        }
+    }
+
+    /**
+     * Execute an action on the controller.
+     *
+     * @param  string  $method
+     * @param  array   $parameters
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function callAction($method, $parameters)
+    {
+        $this->setupLayout();
+
+        return parent::callAction($method, $parameters);
     }
 }

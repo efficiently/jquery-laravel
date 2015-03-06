@@ -1,9 +1,10 @@
 {
     "name": "efficiently/jquery-laravel",
-    "description": "This package provides jQuery and the jQuery-ujs driver for your Laravel 4+ application.",
+    "description": "This package provides jQuery and the jQuery-ujs driver for your Laravel 5.0 application.",
     "keywords": [
         "jquery",
         "laravel",
+        "laravel 5",
         "larasset",
         "assets",
         "asset pipeline",
@@ -22,7 +23,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "~4.1"
+        "illuminate/support": "~5.0",
+        "illuminate/html": "~5.0"
     },
     "autoload": {
         "files": [

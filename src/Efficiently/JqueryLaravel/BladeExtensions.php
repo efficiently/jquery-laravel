@@ -66,7 +66,7 @@ class BladeExtensions
                     $tagName = array_get(array_filter($attributes), 0, "'div'");
 
                     $options = count($attributes) >= 2 ? implode(array_slice($attributes, 1), ',') : "[]";
-                    $replacement = "<?php echo '<'.$tagName.HTML::attributes($options).'>';$3 ?>";
+                    $replacement = "<?php echo '<'.$tagName.app('html')->attributes($options).'>';$3 ?>";
                     $view = preg_replace($pattern, $replacement, $view, 1);
                 }
             }
@@ -115,7 +115,7 @@ class BladeExtensions
             array_filter([dom_class(\${$recordName}, $prefix), array_get(\$options, 'class')])
         );
         \$options['id'] = dom_id(\${$recordName}, $prefix);
-        echo '<'.$tagName.HTML::attributes(\$options).'>';
+        echo '<'.$tagName.app('html')->attributes(\$options).'>';
 ?>
 EOT;
                     $view = preg_replace($pattern, $replacement, $view, 1);

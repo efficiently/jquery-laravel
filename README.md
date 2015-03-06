@@ -1,15 +1,11 @@
 # jquery-laravel
 
-jQuery! For Laravel! So great.
+jQuery! For Laravel 5! So great.
 
 This package provides:
 
-  * jQuery 1.11.1
+  * jQuery 1 and jQuery 2
   * the jQuery UJS adapter
-
-  TODO:
-
-  * assert_select_jquery to test jQuery responses in PHP tests
 
 ## Versions
 
@@ -22,15 +18,17 @@ minor version bump = minor-level updates to jQuery
 major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
 
+For [**Laravel 4.1 or 4.2**](http://laravel.com/docs/4.2) supports see [jQuery-Laravel 1.0 branch](https://github.com/efficiently/jquery-laravel/tree/1.0)
+
 ## Prerequisites
 
 You must [install Node.js](http://nodejs.org) on your computer (development environment).
 
-This package is **only** compatible with **PHP >= 5.4** and **Laravel >= 4.1** framework.
+This package is **only** compatible with **PHP >= 5.4** and **Laravel >= 5.0** framework.
 
 ## Installation
 
-[Laravel](http://laravel.com) apps with [Larasset](https://github.com/efficiently/larasset) package include `jquery-laravel` by default.
+[Laravel](http://laravel.com) apps with [Larasset](https://github.com/efficiently/larasset/tree/1.0) package include `jquery-laravel` by default.
 
 1. So just make a new app
 
@@ -46,13 +44,20 @@ This package is **only** compatible with **PHP >= 5.4** and **Laravel >= 4.1** f
 
 2. Then install Larasset package
 
-    Click [here](https://github.com/efficiently/larasset/blob/master/README.md#installation) to follow the installation instructions of this package.
+    Click [here](https://github.com/efficiently/larasset/tree/1.0/README.md#installation) to follow the installation instructions of this package.
 
 NOTE: The `jquery.js` and `jquery-ujs.js` files will be added to the asset pipeline and available for you to use.
-If they're not already in `app/assets/javascripts/application.js` by default, add these lines:
+If they're not already in `resources/js/app.js` by default, add these lines:
 
 ```js
 //= require jquery
+//= require jquery_ujs
+```
+
+If you want to use jQuery 2, you can require `jquery2` instead:
+
+```js
+//= require jquery2
 //= require jquery_ujs
 ```
 

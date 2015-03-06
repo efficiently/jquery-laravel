@@ -21,11 +21,9 @@ class JqueryLaravelServiceProvider extends ServiceProvider
     {
         $this->registerBladeExtensions();
 
-                $this->package('efficiently/jquery-laravel');
-
-                // Add jQuery Laravel assets path to the search paths of Larasset package
-                $packageAssetsPaths = [$this->packagePath()."/provider/assets/javascripts"];
-                $this->app['config']->set('larasset::paths', array_merge($packageAssetsPaths, $this->app['config']->get('larasset::paths', [])));
+        // Add jQuery Laravel assets path to the search paths of Larasset package
+        $packageAssetsPaths = [$this->packagePath()."/provider/assets/js"];
+        $this->app['config']->set('larasset.paths', array_merge($packageAssetsPaths, config('larasset.paths', [])));
     }
 
     /**
@@ -35,9 +33,9 @@ class JqueryLaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-            $this->app->singleton('html_eloquent_helper', function ($app) {
-                return new EloquentHtmlHelper();
-            });
+        $this->app->singleton('html_eloquent_helper', function ($app) {
+            return new EloquentHtmlHelper();
+        });
     }
 
     /**

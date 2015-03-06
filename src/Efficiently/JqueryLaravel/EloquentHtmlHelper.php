@@ -61,7 +61,6 @@ class EloquentHtmlHelper
     public function domClass($recordOrClass, $prefix = null)
     {
         $singular = snake_case(camel_case(preg_replace('/\\\\/', ' ', $this->modelNameFromRecordOrClassname($recordOrClass))));
-
         return $prefix ? $prefix.'_'.$singular : $singular;
     }
 
@@ -71,6 +70,32 @@ class EloquentHtmlHelper
      */
     protected function modelNameFromRecordOrClassname($recordOrClass)
     {
-        return is_string($recordOrClass) ? $recordOrClass : get_class($recordOrClass);
+        $modelName = is_string($recordOrClass) ? $recordOrClass : get_class($recordOrClass);
+        $modelName = $this->removeRootNamespace($modelName);
+
+        return $modelName;
+    }
+
+    /**
+     * Remove Root namespace. E.G 'App\Message' -> 'Message'
+     * @param string $classname
+     */
+    protected function removeRootNamespace($classname)
+    {
+        $namespaces = $this->splitNamespaces($classname);
+        if (count($namespaces) > 1) {
+            $classname = implode('\\', array_slice($namespaces, 1));
+        }
+
+        return $classname;
+    }
+
+    /**
+     * @param string $classname
+     * @return array
+     */
+    protected function splitNamespaces($classname)
+    {
+        return preg_split("/\\\\|\//", $classname);
     }
 }
