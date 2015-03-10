@@ -1,6 +1,6 @@
 <?php namespace Efficiently\JqueryLaravel;
 
-use View;
+use Blade;
 use Request;
 use Response;
 
@@ -21,12 +21,17 @@ trait ControllerAdditions
         if (is_array($view) && count($view) === 1) {
             $format = array_keys($view)[0];
             $view = array_values($view)[0];
-            if (! ends_with($view, '_'.$format)) {
-                $view = $view.'_'.$format;
+            if (is_string($view)) {
+                if (! ends_with($view, '_'.$format) && view()->exists($view.'_'.$format)) {
+                    $view = $view.'_'.$format;
+                } else {
+                    // inline view
+                    $view = Blade::compileString($view);
+                }
             }
         }
 
-        if (is_string($view)) {
+        if (is_string($view) && view()->exists($view)) {
             $view = view($view, $data);
         }
 
