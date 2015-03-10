@@ -22,8 +22,14 @@ class JqueryLaravelServiceProvider extends ServiceProvider
         $this->registerBladeExtensions();
 
         // Add jQuery Laravel assets path to the search paths of Larasset package
-        $packageAssetsPaths = [$this->packagePath()."/provider/assets/js"];
-        $this->app['config']->set('larasset.paths', array_merge($packageAssetsPaths, config('larasset.paths', [])));
+        $packageAssetsPaths = $this->packagePath().'/provider/assets/js';
+        $this->app['config']->set('larasset.paths', array_merge([$packageAssetsPaths], config('larasset.paths', [])));
+
+        // You can publish assets if you don't use Larasset package
+        // Run: php artisan vendor:publish --provider="Efficiently\JqueryLaravel\JqueryLaravelServiceProvider" --force
+        $this->publishes([
+            $packageAssetsPaths => base_path('resources/js'),
+        ], 'assets');
     }
 
     /**
