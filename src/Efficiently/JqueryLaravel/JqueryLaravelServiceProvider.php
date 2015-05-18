@@ -28,7 +28,7 @@ class JqueryLaravelServiceProvider extends ServiceProvider
         // You can publish assets if you don't use Larasset package
         // Run: php artisan vendor:publish --provider="Efficiently\JqueryLaravel\JqueryLaravelServiceProvider" --force
         $this->publishes([
-            $packageAssetsPaths => base_path('resources/js'),
+            $packageAssetsPaths => base_path('resources/assets/js'),
         ], 'assets');
     }
 
