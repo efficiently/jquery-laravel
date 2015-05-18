@@ -4,12 +4,8 @@ jQuery! For Laravel! So great.
 
 This package provides:
 
-  * jQuery 1.11.1
+  * jQuery 1 and jQuery 2
   * the jQuery UJS adapter
-
-  TODO:
-
-  * assert_select_jquery to test jQuery responses in PHP tests
 
 ## Versions
 
@@ -21,6 +17,8 @@ patch version bump = updates to jquery-ujs, jquery-laravel, and patch-level upda
 minor version bump = minor-level updates to jQuery
 major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
+
+For [**Laravel 5.0**](http://laravel.com/docs/5.0) supports see [jQuery-Laravel 2.0 branch](https://github.com/efficiently/jquery-laravel/tree/2.0)
 
 ## Prerequisites
 
