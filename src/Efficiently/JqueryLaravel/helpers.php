@@ -233,13 +233,13 @@ if (! function_exists('button_to')) {
      * 'method' - HTTP verb. Supported verbs are 'post', 'get', 'delete', 'patch', and 'put'. By default it will be 'post'.
      * 'data-remote' - If set to true, will allow the Unobtrusive JavaScript drivers to control the submit behavior. By default this behavior is an ajax submit.
      * 'data-confirm' - This will use the unobtrusive JavaScript driver to prompt with the question specified. If the user accepts, the link is processed normally, otherwise no action is taken.
+     * 'data-disable-with' - Value of this parameter will be used as the value for a disabled version of the submit button when the form is submitted. This feature is provided by the unobtrusive JavaScript driver.
      * 'form' - This array will be form attributes
      * 'formClass' - This controls the class of the form within which the submit button will be placed. By default it will be 'button_to'.
      * @return string
      */
     function button_to($name, array $options = [])
     {
-
         $formOptions = [
             'method' => array_pull($options, 'method', 'post'),
             'class' => array_pull($options, 'formClass', 'button_to')
@@ -256,14 +256,11 @@ if (! function_exists('button_to')) {
         if (array_get($options, 'data-remote')) {
             $formOptions['data-remote'] = array_pull($options, 'data-remote');
         }
-        if (array_get($options, 'data-confirm')) {
-            $formOptions['data-confirm'] = array_pull($options, 'data-confirm');
-        }
+
         $formOptions = array_merge($formOptions, array_pull($options, 'form', []));
 
         $submitButton = app('form')->submit($name, $options);
-        if (
-            class_exists('Button') &&
+        if (class_exists('Button') &&
             is_a(new Button, '\Illuminate\Support\Facades\Facade') &&
             method_exists(Button::getFacadeRoot(), 'withValue')
         ) {

@@ -1,4 +1,4 @@
-# jquery-laravel
+# jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.0)](http://travis-ci.org/efficiently/jquery-laravel)
 
 jQuery! For Laravel 5! So great.
 
