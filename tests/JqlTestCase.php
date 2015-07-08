@@ -13,35 +13,11 @@ abstract class JqlTestCase extends Orchestra\Testbench\TestCase
         m::close();
     }
 
-    protected function mock($className)
-    {
-        $mock = m::mock($className);
-        App::bind($className, function ($app, $parameters = []) use ($mock) {
-            if (is_array($parameters) && is_array($attributes = array_get($parameters, 0, [])) && respond_to($mock, "fill")) {
-                $mock = $this->fillMock($mock, $attributes);
-            }
-
-            return $mock;
-        });
-
-        return $mock;
-    }
-
-    protected function fillMock($mock, $attributes = [])
-    {
-        $instance = $mock->makePartial();
-        foreach ($attributes as $key => $value) {
-            $instance->$key = $value;
-        }
-
-        return $instance;
-    }
-
     protected function createSession()
     {
-        // Fake session
+        // Mock session
         app('request')->setSession(
-            new \Illuminate\Session\Store(
+            new Illuminate\Session\Store(
                 'name',
                 m::mock('SessionHandlerInterface'),
                 'aaaa'
@@ -64,7 +40,6 @@ abstract class JqlTestCase extends Orchestra\Testbench\TestCase
             'Form'      => 'Collective\Html\FormFacade',
             'HTML'      => 'Collective\Html\HtmlFacade',
             'Former'    => 'Former\Facades\Former',
-            // 'HTMLEloquentHelper' => 'Efficiently\JqueryLaravel\Facades\HTMLEloquentHelper',
         ];
     }
 }

@@ -26,7 +26,7 @@ class BladeExtensions
             ];
 
             $contentTagsPattern = implode("|", $contentTags);
-            // Convert @<tag>_tag to @content_tag('<tag>') extension
+            // Convert @tag_tag to @content_tag('tag') extension
             // E.g. "@div_tag blabla @end_div_tag" becomes "@content_tag('div') blabla @end_contag_tag('div')"
             $contentTagsPattern = '/@('.$contentTagsPattern.')_(tag)(\(([^\r\n]*?)\)|[\r\n\s\t]*)([\r\n\s\t]+)/';
             if (preg_match($contentTagsPattern, $view, $result)) {
@@ -37,8 +37,8 @@ class BladeExtensions
             }
 
             $contentTagsPattern = implode("|", $contentTags);
-            // Convert @<tag>_for to @content_tag_for(object, '<tag>') extension
-            // E.g. "@div_for(object) blabla" becomes "@content_tag_for(object, 'div') blabla"
+            // Convert @tag_for to @content_tag_for('tag', object) extension
+            // E.g. "@div_for(object) blabla" becomes "@content_tag_for('div', object) blabla"
             $contentTagsPattern = '/@('.$contentTagsPattern.')_(tag_for|for)\((.+)\)([\r\n\s\t]+)/';
             if (preg_match($contentTagsPattern, $view)) {
                 $replacement = '@content_tag_for("$1", $3)$4';
@@ -46,7 +46,7 @@ class BladeExtensions
             }
 
             $contentTagsPattern = implode("|", $contentTags);
-            // Convert @end_<tag>_tag and @end_<tag>_for to @endcontent_tag('<tag>') and @endcontent_tag_for('<tag>') extensions
+            // Convert @end_tag_tag and @end_tag_for to @endcontent_tag('tag') and @endcontent_tag_for('tag') extensions
             // E.g. "blabla @enddiv_for" becomes "blabla @endcontag_tag_for('div')"
             $contentTagsPattern = '/@end_?('.$contentTagsPattern.')_(tag|tag_for|for)([\r\n\s\t]+)/';
             if (preg_match($contentTagsPattern, $view, $matches)) {
