@@ -99,7 +99,7 @@ class JqlControllerAdditionsTest extends JqlTestCase
 
     protected function mockProject($project)
     {
-        $mock = m::mock(Project::class);
+        $mock = m::mock('Jql\Project');
         $mock->shouldReceive('all')->andReturn([$project]);
 
         return $mock;
