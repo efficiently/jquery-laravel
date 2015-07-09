@@ -12,7 +12,7 @@ trait ControllerAdditions
      * @param  array $data Data that should be made available to the view. Only used when $view is a string path
      * @param  string|boolean $layout Master layout path
      *
-     * @return \Illuminate\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function render($view, $data = [], $layout = null)
     {
@@ -51,10 +51,10 @@ trait ControllerAdditions
         if ($this->layout) {
             $this->layout->content = $view;
 
-            return $this->layout;
-        } else {
-            return $view;
+            return response($this->layout);
         }
+
+        return response($view);
     }
 
     /**
@@ -64,7 +64,7 @@ trait ControllerAdditions
      */
     protected function setupLayout()
     {
-        if (! is_null($this->layout)) {
+        if ($this->layout) {
             $this->layout = view($this->layout);
         }
     }

@@ -5,7 +5,7 @@ class EloquentHtmlHelper
 
     /**
      * The DOM id convention is to use the singular form of an object or class with the id following an underscore.
-     * If no id is found, prefix with “create_” instead.
+     * If no id is found, prefix with "create_" instead.
      *
      * @param  object|\Illuminate\Database\Eloquent\Model $record
      * @param  string  $prefix
@@ -24,8 +24,8 @@ class EloquentHtmlHelper
 
     /**
      * The Form id convention is to use the singular form of an object or class with the id following an underscore.
-     * If id is found, prefix with “edit_”.
-     * If no id is found, prefix with “create_” instead.
+     * If id is found, prefix with "edit_".
+     * If no id is found, prefix with "create_" instead.
      *
      * @param  object|\Illuminate\Database\Eloquent\Model $record
      * @param  string  $fallbackPrefix By default it's 'create'
