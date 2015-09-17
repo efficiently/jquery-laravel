@@ -2,12 +2,19 @@
 
 use Closure;
 use Illuminate\Contracts\Routing\Middleware;
-use Log;
 
 // Verify that we aren't serving an unauthorized cross-origin JavaScript response.
 
 class VerifyJavascriptResponse implements Middleware
 {
+
+    /**
+     * The URIs that should be excluded from cross origin verification.
+     *
+     * @var array
+     */
+    protected $except = [];
+
 
     /**
      * Create a new middleware instance.
@@ -30,8 +37,8 @@ class VerifyJavascriptResponse implements Middleware
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        if ($this->isReading($request) &&
-            $this->nonXhrJavascriptResponse($request, $response)
+        if (! $this->shouldPassThrough($request) ||
+            ($this->isReading($request) && $this->nonXhrJavascriptResponse($request, $response))
         ) {
             $crossOriginJavascriptWarning = "Security warning: an embedded " .
                 "<script> tag on another site requested protected JavaScript. " .
@@ -43,6 +50,23 @@ class VerifyJavascriptResponse implements Middleware
 
         return $response;
     }
+
+    /**
+     * Determine if the request has a URI that should pass through cross origin verification.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function shouldPassThrough($request)
+    {
+        foreach ($this->except as $except) {
+            if ($request->is($except)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Determine if the the response isn't a XHR(AJAX) Javascript one
      *
