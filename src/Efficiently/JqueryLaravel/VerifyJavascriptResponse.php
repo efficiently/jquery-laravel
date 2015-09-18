@@ -37,15 +37,17 @@ class VerifyJavascriptResponse implements Middleware
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        if (! $this->shouldPassThrough($request) ||
-            ($this->isReading($request) && $this->nonXhrJavascriptResponse($request, $response))
-        ) {
-            $crossOriginJavascriptWarning = "Security warning: an embedded " .
-                "<script> tag on another site requested protected JavaScript. " .
-                "If you know what you're doing, go ahead and disable CSRF " .
-                "protection on this action to permit cross-origin JavaScript embedding.";
+        if (! $this->shouldPassThrough($request)) {
+            if ($this->isReading($request) &&
+                $this->nonXhrJavascriptResponse($request, $response)
+            ) {
+                $crossOriginJavascriptWarning = "Security warning: an embedded " .
+                    "<script> tag on another site requested protected JavaScript. " .
+                    "If you know what you're doing, go ahead and disable CSRF " .
+                    "protection on this action to permit cross-origin JavaScript embedding.";
 
-            throw new CrossOriginRequestException($crossOriginJavascriptWarning);
+                throw new CrossOriginRequestException($crossOriginJavascriptWarning);
+            }
         }
 
         return $response;
