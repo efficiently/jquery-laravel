@@ -82,11 +82,11 @@ EOT;
         $expect = <<<EOT
 <?php
     \$projectRecord = \$project;
-    if (! is_a(\$projectRecord, "\Illuminate\Support\Collection")) {
+    if (! is_a(\$projectRecord, "\IteratorAggregate")) {
         \$projectRecord = new \Illuminate\Support\Collection([\$projectRecord]);
     }
     \$projectIndex = -1;// -1 because we increment index at the beginnning of the loop
-    \$projectRecord->each(function(\$project) use(\$__env, &\$projectIndex){
+    foreach (\$projectRecord as \$project) {
         \$projectIndex++;
         \$options = (array) [];
         \$options['class'] = implode(" ",
@@ -98,7 +98,7 @@ EOT;
 <?php
         echo '</'.'div'.'>';
 
-    });
+    }
 ?>
 EOT;
         $view = Blade::compileString($contentTagFor);
@@ -121,11 +121,11 @@ EOT;
         $expect = <<<EOT
 <?php
     \$projectRecord = \$project;
-    if (! is_a(\$projectRecord, "\Illuminate\Support\Collection")) {
+    if (! is_a(\$projectRecord, "\IteratorAggregate")) {
         \$projectRecord = new \Illuminate\Support\Collection([\$projectRecord]);
     }
     \$projectIndex = -1;// -1 because we increment index at the beginnning of the loop
-    \$projectRecord->each(function(\$project) use(\$__env, &\$projectIndex){
+    foreach (\$projectRecord as \$project) {
         \$projectIndex++;
         \$options = (array) ['remote' => 'true'];
         \$options['class'] = implode(" ",
@@ -137,7 +137,7 @@ EOT;
 <?php
         echo '</'.'div'.'>';
 
-    });
+    }
 ?>
 EOT;
         $view = Blade::compileString($contentTagFor);

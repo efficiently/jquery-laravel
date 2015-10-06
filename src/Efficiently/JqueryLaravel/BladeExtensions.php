@@ -104,11 +104,11 @@ class BladeExtensions
                     $replacement = <<<EOT
 <?php
     \${$recordName}Record = $record;
-    if (! is_a(\${$recordName}Record, "\Illuminate\Support\Collection")) {
+    if (! is_a(\${$recordName}Record, "\IteratorAggregate")) {
         \${$recordName}Record = new \Illuminate\Support\Collection([\${$recordName}Record]);
     }
     \${$recordIndex} = -1;// -1 because we increment index at the beginnning of the loop
-    \${$recordName}Record->each(function(\${$recordName}) use(\$__env, &\${$recordIndex}){
+    foreach (\${$recordName}Record as \${$recordName}) {
         \${$recordIndex}++;
         \$options = (array) $options;
         \$options['class'] = implode(" ",
@@ -132,7 +132,7 @@ EOT;
                     $replacement = <<<EOT
 <?php
         echo '</'.$tagName.'>';$3
-    });
+    }
 ?>
 EOT;
                     $view = preg_replace($pattern, $replacement, $view, 1);
