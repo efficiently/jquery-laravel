@@ -104,7 +104,7 @@ class BladeExtensions
                     $replacement = <<<EOT
 <?php
     \${$recordName}Record = $record;
-    if (! is_a(\${$recordName}Record, "\IteratorAggregate")) {
+    if (! is_array(\${$recordName}Record) && ! is_a(\${$recordName}Record, "\IteratorAggregate")) {
         \${$recordName}Record = new \Illuminate\Support\Collection([\${$recordName}Record]);
     }
     \${$recordIndex} = -1;// -1 because we increment index at the beginnning of the loop

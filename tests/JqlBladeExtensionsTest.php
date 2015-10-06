@@ -82,7 +82,7 @@ EOT;
         $expect = <<<EOT
 <?php
     \$projectRecord = \$project;
-    if (! is_a(\$projectRecord, "\IteratorAggregate")) {
+    if (! is_array(\$projectRecord) && ! is_a(\$projectRecord, "\IteratorAggregate")) {
         \$projectRecord = new \Illuminate\Support\Collection([\$projectRecord]);
     }
     \$projectIndex = -1;// -1 because we increment index at the beginnning of the loop
@@ -121,7 +121,7 @@ EOT;
         $expect = <<<EOT
 <?php
     \$projectRecord = \$project;
-    if (! is_a(\$projectRecord, "\IteratorAggregate")) {
+    if (! is_array(\$projectRecord) && ! is_a(\$projectRecord, "\IteratorAggregate")) {
         \$projectRecord = new \Illuminate\Support\Collection([\$projectRecord]);
     }
     \$projectIndex = -1;// -1 because we increment index at the beginnning of the loop
