@@ -1,6 +1,6 @@
-# jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.0)](http://travis-ci.org/efficiently/jquery-laravel)
+# jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.1)](http://travis-ci.org/efficiently/jquery-laravel)
 
-jQuery! For Laravel 5! So great.
+jQuery! For Laravel 5.1 & 5.2! So great.
 
 This package provides:
 
@@ -18,13 +18,14 @@ minor version bump = minor-level updates to jQuery
 major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
 
+For [**Laravel 5.0**](http://laravel.com/docs/5.0) supports see [jQuery-Laravel 2.0 branch](https://github.com/efficiently/jquery-laravel/tree/2.0)
 For [**Laravel 4.1 or 4.2**](http://laravel.com/docs/4.2) supports see [jQuery-Laravel 1.0 branch](https://github.com/efficiently/jquery-laravel/tree/1.0)
 
 ## Prerequisites
 
 You must [install Node.js](http://nodejs.org) on your computer (development environment).
 
-This package is **only** compatible with **PHP >= 5.4** and **Laravel >= 5.0** framework.
+This package version is **only** compatible with **PHP >= 5.5** and **Laravel >= 5.1** framework.
 
 ## Installation
 
