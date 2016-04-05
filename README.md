@@ -19,6 +19,7 @@ major version bump = major-level updates to jQuery and updates to Laravel/Larass
 ```
 
 For [**Laravel 5.0**](http://laravel.com/docs/5.0) supports see [jQuery-Laravel 2.0 branch](https://github.com/efficiently/jquery-laravel/tree/2.0)
+
 For [**Laravel 4.1 or 4.2**](http://laravel.com/docs/4.2) supports see [jQuery-Laravel 1.0 branch](https://github.com/efficiently/jquery-laravel/tree/1.0)
 
 ## Prerequisites
