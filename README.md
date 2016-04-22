@@ -1,6 +1,6 @@
 # jquery-laravel
 
-jQuery! For Laravel! So great.
+jQuery! For Laravel 4! So great.
 
 This package provides:
 
@@ -19,6 +19,8 @@ major version bump = major-level updates to jQuery and updates to Laravel/Larass
 ```
 
 For [**Laravel 5.0**](http://laravel.com/docs/5.0) supports see [jQuery-Laravel 2.0 branch](https://github.com/efficiently/jquery-laravel/tree/2.0)
+
+For [**Laravel 5.1 or 5.2**](http://laravel.com/docs/5.2) supports see [jQuery-Laravel 2.1 branch](https://github.com/efficiently/jquery-laravel/tree/2.1)
 
 ## Prerequisites
 
