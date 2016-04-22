@@ -20,6 +20,8 @@ major version bump = major-level updates to jQuery and updates to Laravel/Larass
 
 For [**Laravel 4.1 or 4.2**](http://laravel.com/docs/4.2) supports see [jQuery-Laravel 1.0 branch](https://github.com/efficiently/jquery-laravel/tree/1.0)
 
+For [**Laravel 5.1 or 5.2**](http://laravel.com/docs/5.2) supports see [jQuery-Laravel 2.1 branch](https://github.com/efficiently/jquery-laravel/tree/2.1)
+
 ## Prerequisites
 
 You must [install Node.js](http://nodejs.org) on your computer (development environment).
