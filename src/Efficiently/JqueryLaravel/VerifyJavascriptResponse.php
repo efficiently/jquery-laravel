@@ -1,11 +1,10 @@
 <?php namespace Efficiently\JqueryLaravel;
 
 use Closure;
-use Illuminate\Contracts\Routing\Middleware;
 
 // Verify that we aren't serving an unauthorized cross-origin JavaScript response.
 
-class VerifyJavascriptResponse implements Middleware
+class VerifyJavascriptResponse
 {
 
     /**
