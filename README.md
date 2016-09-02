@@ -9,6 +9,10 @@ This package provides:
 
 ## Versions
 
+For [**Laravel 5.1 or 5.2 or 5.3**](http://laravel.com/docs/5.3) supports see [jQuery-Laravel 2.2 branch](https://github.com/efficiently/jquery-laravel/tree/2.2)
+
+For [**Laravel 5.0**](http://laravel.com/docs/5.0) supports see [jQuery-Laravel 2.0 branch](https://github.com/efficiently/jquery-laravel/tree/2.0)
+
 The `jquery-laravel` package follows these version guidelines
 to provide more control over your app's jQuery version from your `composer.json` file:
 
@@ -17,10 +21,6 @@ patch version bump = updates to jquery-ujs, jquery-laravel, and patch-level upda
 minor version bump = minor-level updates to jQuery
 major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
-
-For [**Laravel 5.0**](http://laravel.com/docs/5.0) supports see [jQuery-Laravel 2.0 branch](https://github.com/efficiently/jquery-laravel/tree/2.0)
-
-For [**Laravel 5.1 or 5.2**](http://laravel.com/docs/5.2) supports see [jQuery-Laravel 2.1 branch](https://github.com/efficiently/jquery-laravel/tree/2.1)
 
 ## Prerequisites
 
