@@ -15,10 +15,11 @@ sudo: false
 env:
   - LARAVEL_VERSION="~5.1.0" TESTBENCH_VERSION="~3.1.0"
   - LARAVEL_VERSION="~5.2.0" TESTBENCH_VERSION="~3.2.0"
+  - LARAVEL_VERSION="~5.3.0" TESTBENCH_VERSION="~3.3.0"
 
 before_install:
-  - sed -i s/~5.1.0\|\|~5.2.0/${LARAVEL_VERSION}/ composer.json
-  - sed -i s/~3.1.0\|\|~3.2.0/${TESTBENCH_VERSION}/ composer.json
+  - sed -i s/~5.1.0\|\|~5.2.0\|\|~5.3.0/${LARAVEL_VERSION}/ composer.json
+  - sed -i s/~3.1.0\|\|~3.2.0\|\|~3.3.0/${TESTBENCH_VERSION}/ composer.json
   - composer update # Use update since we'll be changing the composer.json
 
 script: vendor/bin/phpunit tests

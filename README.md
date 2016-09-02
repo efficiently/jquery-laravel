@@ -1,10 +1,10 @@
-# jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.1)](http://travis-ci.org/efficiently/jquery-laravel)
+# jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.2)](http://travis-ci.org/efficiently/jquery-laravel)
 
-jQuery! For Laravel 5.1 & 5.2! So great.
+jQuery! For Laravel 5.1, 5.2 and 5.3! So great.
 
 This package provides:
 
-  * jQuery 1 and jQuery 2
+  * jQuery 1, 2 and 3
   * the jQuery UJS adapter
 
 ## Versions
@@ -17,6 +17,8 @@ patch version bump = updates to jquery-ujs, jquery-laravel, and patch-level upda
 minor version bump = minor-level updates to jQuery
 major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
+
+For [**Laravel 5.1 or 5.2**](http://laravel.com/docs/5.2) supports see [jQuery-Laravel 2.1 branch](https://github.com/efficiently/jquery-laravel/tree/2.1)
 
 For [**Laravel 5.0**](http://laravel.com/docs/5.0) supports see [jQuery-Laravel 2.0 branch](https://github.com/efficiently/jquery-laravel/tree/2.0)
 
@@ -60,6 +62,13 @@ If you want to use jQuery 2, you can require `jquery2` instead:
 
 ```js
 //= require jquery2
+//= require jquery_ujs
+```
+
+And if you want to use jQuery 3, you can require `jquery3`:
+
+```js
+//= require jquery3
 //= require jquery_ujs
 ```
 
