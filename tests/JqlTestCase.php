@@ -16,7 +16,8 @@ abstract class JqlTestCase extends Orchestra\Testbench\TestCase
     protected function createSession()
     {
         // Mock session
-        app('request')->setSession(
+        $setSessionMethod = method_exists(app('request'), 'setLaravelSession') ? 'setLaravelSession' : 'setSession';
+        app('request')->$setSessionMethod(
             new Illuminate\Session\Store(
                 'name',
                 m::mock('SessionHandlerInterface'),
