@@ -52,13 +52,15 @@
         "Jql\\": "tests/fixtures/jql/"
       }
     },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "Efficiently\\JqueryLaravel\\JqueryLaravelServiceProvider"
+        ]
+      }
+    },
     "config": {
         "preferred-install": "dist"
-    },
-    "laravel": {
-        "providers": [
-            "Efficiently\\JqueryLaravel\\JqueryLaravelServiceProvider"
-        ]
     },
     "prefer-stable": true,
     "minimum-stability": "dev"
