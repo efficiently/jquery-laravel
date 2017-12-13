@@ -1,6 +1,6 @@
 # jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.2)](http://travis-ci.org/efficiently/jquery-laravel)
 
-jQuery! For Laravel 5.1, 5.2, 5.3 and 5.4! So great.
+jQuery! For Laravel 5.1, 5.2, 5.3, 5.4 and 5.5! So great.
 
 This package provides:
 
