@@ -32,9 +32,11 @@ This package version is **only** compatible with **PHP >= 5.5** and **Laravel >=
 
 ## Installation
 
-[Laravel](http://laravel.com) apps with [Larasset](https://github.com/efficiently/larasset/tree/1.0) package include `jquery-laravel` by default.
+Read the wiki [Installation Instructions](https://github.com/efficiently/jquery-laravel/wiki/Installation-Instructions) page, if you don't want to use the Larasset package
 
-1. So just make a new app
+Or, if you want to use the [Larasset](https://github.com/efficiently/larasset) package which include `jquery-laravel` by default:
+
+1. Just make a new app
 
     ```sh
     composer create-project laravel/laravel your-project-name --prefer-dist
@@ -48,7 +50,7 @@ This package version is **only** compatible with **PHP >= 5.5** and **Laravel >=
 
 2. Then install Larasset package
 
-    Click [here](https://github.com/efficiently/larasset/tree/1.0/README.md#installation) to follow the installation instructions of this package.
+    Click [here](https://github.com/efficiently/larasset/blob/1.3/README.md#installation) to follow the installation instructions of this package.
 
 NOTE: The `jquery.js` and `jquery-ujs.js` files will be added to the asset pipeline and available for you to use.
 If they're not already in `resources/js/app.js` by default, add these lines:
