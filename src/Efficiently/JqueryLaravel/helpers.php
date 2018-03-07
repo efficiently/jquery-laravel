@@ -1,7 +1,6 @@
 <?php
 
 if (! function_exists('dom_id')) {
-
     /**
      * The DOM id convention is to use the singular form of an object or class with the id following an underscore.
      * If no id is found, prefix with “create_” instead.
@@ -18,7 +17,6 @@ if (! function_exists('dom_id')) {
 }
 
 if (! function_exists('form_id')) {
-
     /**
      * The Form id convention is to use the singular form of an object or class with the id following an underscore.
      * If id is found, prefix with “edit_”.
@@ -35,7 +33,6 @@ if (! function_exists('form_id')) {
 }
 
 if (! function_exists('form_for')) {
-
     /**
      * Create a new model based form builder.
      * And adding a CSRF Token
@@ -82,7 +79,6 @@ if (! function_exists('form_for')) {
 }
 
 if (! function_exists('form_for_close')) {
-
     /**
      * Close the current form.
      *
@@ -97,7 +93,6 @@ if (! function_exists('form_for_close')) {
 }
 
 if (! function_exists('former_for')) {
-
     /**
      * Create a new model based former builder.
      *
@@ -172,7 +167,6 @@ if (! function_exists('former_for')) {
 }
 
 if (! function_exists('former_for_close')) {
-
     /**
      * Adding a CSRF Token and close the current form.
      *
@@ -191,7 +185,6 @@ if (! function_exists('former_for_close')) {
 
 
 if (! function_exists('record_key_for_dom_id')) {
-
     /**
      * @param  object|\Illuminate\Database\Eloquent\Model $record
      * @return string
@@ -203,7 +196,6 @@ if (! function_exists('record_key_for_dom_id')) {
 }
 
 if (! function_exists('dom_class')) {
-
     /**
      * The DOM class convention is to use the singular form of an object or class.
      *
@@ -219,7 +211,6 @@ if (! function_exists('dom_class')) {
 
 
 if (! function_exists('button_to')) {
-
     /**
      * Generates a form containing a single button that submits to the URL created by the set of options.
      *
@@ -272,7 +263,6 @@ if (! function_exists('button_to')) {
 }
 
 if (! function_exists('render_view')) {
-
     /**
      * Render a view, useful in your Blade templates
      *
@@ -288,7 +278,7 @@ if (! function_exists('render_view')) {
     {
         $view = view($view, $parameters, array_except(get_defined_vars(), ['__data', '__path']))->render();
         if ($section) {
-            $view = $view.View::yieldContent($section);
+            $view = $view.view()->yieldContent($section);
         }
 
         return $view;
@@ -296,7 +286,6 @@ if (! function_exists('render_view')) {
 }
 
 if (! function_exists('csrf_meta_tags')) {
-
     /**
      * Returns meta tags “csrf-param” and “csrf-token”
      * with the name of the cross-site request forgery protection

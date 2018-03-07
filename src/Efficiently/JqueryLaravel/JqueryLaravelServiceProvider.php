@@ -1,4 +1,6 @@
-<?php namespace Efficiently\JqueryLaravel;
+<?php
+
+namespace Efficiently\JqueryLaravel;
 
 use Illuminate\Support\ServiceProvider;
 

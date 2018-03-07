@@ -1,8 +1,9 @@
-<?php namespace Efficiently\JqueryLaravel;
+<?php
+
+namespace Efficiently\JqueryLaravel;
 
 class EloquentHtmlHelper
 {
-
     /**
      * The DOM id convention is to use the singular form of an object or class with the id following an underscore.
      * If no id is found, prefix with "create_" instead.
@@ -35,9 +36,9 @@ class EloquentHtmlHelper
     {
         if ($recordId = $this->recordKeyForDomId($record)) {
             return $this->domClass($record, 'edit').'_'.$recordId;
-        } else {
-            return $this->domClass($record, $fallbackPrefix);
         }
+
+        return $this->domClass($record, $fallbackPrefix);
     }
 
     /**

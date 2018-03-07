@@ -1,12 +1,12 @@
-<?php namespace Efficiently\JqueryLaravel;
+<?php
+
+namespace Efficiently\JqueryLaravel;
 
 use Closure;
 
 // Verify that we aren't serving an unauthorized cross-origin JavaScript response.
-
 class VerifyJavascriptResponse
 {
-
     /**
      * The URIs that should be excluded from cross origin verification.
      *

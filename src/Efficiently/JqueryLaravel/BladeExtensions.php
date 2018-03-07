@@ -1,4 +1,6 @@
-<?php namespace Efficiently\JqueryLaravel;
+<?php
+
+namespace Efficiently\JqueryLaravel;
 
 class BladeExtensions
 {
@@ -141,6 +143,5 @@ EOT;
 
             return $view;
         });
-
     }
 }

@@ -1,4 +1,6 @@
-<?php namespace Efficiently\JqueryLaravel;
+<?php
+
+namespace Efficiently\JqueryLaravel;
 
 use Blade;
 use Request;
@@ -12,7 +14,7 @@ trait ControllerAdditions
      * @param  mixed $options If $options is a string, it's used as the master layout path of the view.
      *               E.G. $this->render('messages.index', 'app'); where the layout 'app' is the 'resources/views/app.blade.php' file.
      *               If $options is null, the master layout is set with the value of the Controller::$layout property.
-     *               If $options is a boolean, if`it's `false`, no layout is applied on the view.
+     *               If $options is a boolean, if it's `false`, no layout is applied on the view.
      *               If $options is an array, default values are: ['status' => 200, 'headers' => []]
      *
      * @return \Illuminate\Http\Response
