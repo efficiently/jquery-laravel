@@ -16,13 +16,24 @@ trait ControllerAdditions
      *               If $options is null, the master layout is set with the value of the Controller::$layout property.
      *               If $options is a boolean, if it's `false`, no layout is applied on the view.
      *               If $options is an array, default values are: ['status' => 200, 'headers' => []]
-     *
      * @return \Illuminate\Http\Response
      */
     public function render($view, $data = [], $options = null)
     {
+        list($view, $options) = $this->makeView($view, $data, $options);
+
+        return $this->makeResponse($view, $options);
+    }
+
+    /**
+     * @param  \Illuminate\View\View|string|array $view    [description]
+     * @param  array  $data
+     * @param  mixed $options
+     * @return array [\Illuminate\View\View $view, array $options]
+     */
+    protected function makeView($view, $data = [], $options = null)
+    {
         $layout = null;
-        $defaultOptions = ['status' => 200, 'headers' => []];
         if (is_string($options)) {
             // To support legacy behaviour
             $layout = $options;
@@ -39,7 +50,6 @@ trait ControllerAdditions
             }
             $options = [];
         }
-        $options = array_merge($defaultOptions, $options);
 
         $format = null; // if `null`, it uses the 'html' format by default
         if (is_array($view) && count($view) === 1) {
@@ -67,18 +77,32 @@ trait ControllerAdditions
             // Transform the $view string path to a View object
             $view = view($view, $data);
         }
-        $render = $view;
 
         $this->setupLayout($layout);
         if ($this->layout && $this->layout->getName() !== $view->getName()) {
-            $this->layout->with('content', $render);
-            $render = $this->layout;
+            $this->layout->with('content', $view);
+            $view = $this->layout;
         }
+        $options['format'] = $format;
+
+        return [$view, $options];
+    }
+
+    /**
+     * @param  \Illuminate\View\View $view
+     * @param  array $options
+     * @return \Illuminate\Http\Response
+     */
+    protected function makeResponse($view, $options = [])
+    {
+        $format = array_pull($options, 'format');
+        $defaultOptions = ['status' => 200, 'headers' => []];
+        $options = array_merge($defaultOptions, $options);
 
         if (response()->hasMacro('makeWithTurbolinks')) {
-            $response = response()->makeWithTurbolinks($render, $options);
+            $response = response()->makeWithTurbolinks($view, $options);
         } else {
-            $response = response($render, $options['status'], $options['headers']);
+            $response = response($view, $options['status'], $options['headers']);
         }
         if ($format) {
             $response->header('Content-Type', Request::getMimeType($format));
@@ -90,7 +114,6 @@ trait ControllerAdditions
     /**
      * @param  string $path URL
      * @param  array $options Default to: ['status' => 302, 'headers' => [], 'secure' => null]
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectTo($path, $options = [])
@@ -106,6 +129,7 @@ trait ControllerAdditions
 
     /**
      * Setup the layout used by the controller.
+     *
      * @param  string|bool|\Illuminate\View\View $layout Custom layout
      * @return void
      */
