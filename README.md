@@ -1,4 +1,4 @@
-# jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.2)](http://travis-ci.org/efficiently/jquery-laravel)
+# jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.3)](http://travis-ci.org/efficiently/jquery-laravel)
 
 jQuery! For Laravel 5.1, 5.2, 5.3, 5.4 and 5.5! So great.
 
@@ -18,11 +18,11 @@ minor version bump = minor-level updates to jQuery
 major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
 
-For [**Laravel 5.1 or 5.2**](http://laravel.com/docs/5.2) supports see [jQuery-Laravel 2.1 branch](https://github.com/efficiently/jquery-laravel/tree/2.1)
+For [Laravel 5.1 or 5.2](http://laravel.com/docs/5.2) supports see [jQuery-Laravel **2.1 branch**](https://github.com/efficiently/jquery-laravel/tree/2.1)
 
-For [**Laravel 5.0**](http://laravel.com/docs/5.0) supports see [jQuery-Laravel 2.0 branch](https://github.com/efficiently/jquery-laravel/tree/2.0)
+For [Laravel 5.0](http://laravel.com/docs/5.0) supports see [jQuery-Laravel **2.0 branch**](https://github.com/efficiently/jquery-laravel/tree/2.0)
 
-For [**Laravel 4.1 or 4.2**](http://laravel.com/docs/4.2) supports see [jQuery-Laravel 1.0 branch](https://github.com/efficiently/jquery-laravel/tree/1.0)
+For [Laravel 4.1 or 4.2](http://laravel.com/docs/4.2) supports see [jQuery-Laravel **1.0 branch**](https://github.com/efficiently/jquery-laravel/tree/1.0)
 
 ## Prerequisites
 
