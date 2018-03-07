@@ -21,6 +21,7 @@ trait ControllerAdditions
     public function render($view, $data = [], $options = null)
     {
         list($view, $options) = $this->makeView($view, $data, $options);
+        $view = $this->makeLayout($view, $options);
 
         return $this->makeResponse($view, $options);
     }
@@ -29,7 +30,7 @@ trait ControllerAdditions
      * @param  \Illuminate\View\View|string|array $view    [description]
      * @param  array  $data
      * @param  mixed $options
-     * @return array [\Illuminate\View\View $view, array $options]
+     * @return array [\Illuminate\View\View|string $view, array $options]
      */
     protected function makeView($view, $data = [], $options = null)
     {
@@ -77,19 +78,33 @@ trait ControllerAdditions
             // Transform the $view string path to a View object
             $view = view($view, $data);
         }
-
-        $this->setupLayout($layout);
-        if ($this->layout && $this->layout->getName() !== $view->getName()) {
-            $this->layout->with('content', $view);
-            $view = $this->layout;
-        }
+        $options['layout'] = $layout;
         $options['format'] = $format;
 
         return [$view, $options];
     }
 
     /**
-     * @param  \Illuminate\View\View $view
+     * @param  \Illuminate\View\View|string $view
+     * @param  array $options
+     * @return \Illuminate\View\View|string
+     */
+    protected function makeLayout($view, $options = [])
+    {
+        $layout = array_pull($options, 'layout');
+        $this->setupLayout($layout);
+        if ($this->layout &&
+            (is_string($view) || $this->layout->getName() !== $view->getName())
+        ) {
+            $this->layout->with('content', $view);
+            $view = $this->layout;
+        }
+
+        return $view;
+    }
+
+    /**
+     * @param  \Illuminate\View\View|string $view
      * @param  array $options
      * @return \Illuminate\Http\Response
      */
