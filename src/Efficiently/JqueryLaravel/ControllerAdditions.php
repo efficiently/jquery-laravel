@@ -49,9 +49,17 @@ trait ControllerAdditions
                 if (! ends_with($view, '_'.$format) && view()->exists($view.'_'.$format)) {
                     $view = $view.'_'.$format;
                 } else {
-                    // inline view
+                    // Inline view
                     $view = Blade::compileString($view);
                 }
+            }
+            if ($format === 'html') {
+                $format = null; // if `null`, it uses the 'html' format by default
+            }
+            // If the format isn't 'html' and no custom layout is provided
+            // The default layout should not be use
+            if ($format && is_null($layout)) {
+                $layout = false;
             }
         }
 
@@ -59,31 +67,24 @@ trait ControllerAdditions
             // Transform the $view string path to a View object
             $view = view($view, $data);
         }
-
-        // short circuit
-        if ($format) {
-            $response = response($view, $options['status'], $options['headers']);
-            $response->header('Content-Type', Request::getMimeType($format));
-
-            return $response;
-        }
-
-        if (! is_null($layout)) {
-            $this->layout = $layout;
-            $this->setupLayout();
-        }
-
         $render = $view;
-        if ($this->layout) {
-            $this->layout->content = $view;
+
+        $this->setupLayout($layout);
+        if ($this->layout && $this->layout->getName() !== $view->getName()) {
+            $this->layout->with('content', $render);
             $render = $this->layout;
         }
 
         if (response()->hasMacro('makeWithTurbolinks')) {
-            return response()->makeWithTurbolinks($render, $options);
+            $response = response()->makeWithTurbolinks($render, $options);
+        } else {
+            $response = response($render, $options['status'], $options['headers']);
+        }
+        if ($format) {
+            $response->header('Content-Type', Request::getMimeType($format));
         }
 
-        return response()->make($render, $options['status'], $options['headers']);
+        return $response;
     }
 
     /**
@@ -105,12 +106,13 @@ trait ControllerAdditions
 
     /**
      * Setup the layout used by the controller.
-     *
+     * @param  string|bool|\Illuminate\View\View $layout Custom layout
      * @return void
      */
-    protected function setupLayout()
+    protected function setupLayout($layout = null)
     {
-        if ($this->layout) {
+        $this->layout = !is_null($layout) ? $layout : $this->layout;
+        if ($this->layout && is_string($this->layout) && view()->exists($this->layout)) {
             $this->layout = view($this->layout);
         }
     }
