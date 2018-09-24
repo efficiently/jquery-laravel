@@ -30,7 +30,7 @@ For [Laravel 4.1 or 4.2](http://laravel.com/docs/4.2) supports see [jQuery-Larav
 
 You must [install Node.js](http://nodejs.org) on your computer (development environment).
 
-This package version is **only** compatible with **PHP >= 5.5** and **Laravel >= 5.1** framework.
+This package version is **only** compatible with **PHP >= 7.0** and **Laravel >= 5.5** framework.
 
 ## Installation
 
