@@ -1,6 +1,6 @@
 # jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.4)](http://travis-ci.org/efficiently/jquery-laravel)
 
-jQuery! For Laravel 5.1, 5.2, 5.3, 5.4, 5.5, 5.6 and 5.7! So great.
+jQuery! For Laravel 5.5, 5.6 and 5.7! So great.
 
 This package provides:
 
@@ -17,6 +17,8 @@ patch version bump = updates to jquery-ujs, jquery-laravel, and patch-level upda
 minor version bump = minor-level updates to jQuery
 major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
+
+For [Laravel 5.1, 5.2, 5.3 or 5.4](http://laravel.com/docs/5.4) supports see [jQuery-Laravel **2.3 branch**](https://github.com/efficiently/jquery-laravel/tree/2.3)
 
 For [Laravel 5.1 or 5.2](http://laravel.com/docs/5.2) supports see [jQuery-Laravel **2.1 branch**](https://github.com/efficiently/jquery-laravel/tree/2.1)
 
