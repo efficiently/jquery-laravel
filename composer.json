@@ -38,8 +38,8 @@
         "files": [
             "src/Efficiently/JqueryLaravel/helpers.php"
         ],
-        "psr-0": {
-            "Efficiently\\JqueryLaravel\\": "src/"
+        "psr-4": {
+            "Efficiently\\JqueryLaravel\\": "src/Efficiently/JqueryLaravel/"
         }
     },
     "autoload-dev": {
