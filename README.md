@@ -9,7 +9,9 @@ This package provides:
 
 ## Versions
 
-For [**Laravel 5.1, 5.2, 5.3, 5.4 and 5.5**](http://laravel.com/docs/5.5) supports see [jQuery-Laravel 2.2 branch](https://github.com/efficiently/jquery-laravel/tree/2.2)
+For [**Laravel 5.5, 5.6 or 5.7**](http://laravel.com/docs/5.7) supports see [jQuery-Laravel **2.4 branch**](https://github.com/efficiently/jquery-laravel/tree/2.4)
+
+For [Laravel 5.1, 5.2, 5.3, 5.4 and 5.5](http://laravel.com/docs/5.5) supports see [jQuery-Laravel 2.3 branch](https://github.com/efficiently/jquery-laravel/tree/2.3)
 
 For [Laravel 5.0](http://laravel.com/docs/5.0) supports see [jQuery-Laravel 2.0 branch](https://github.com/efficiently/jquery-laravel/tree/2.0)
 
