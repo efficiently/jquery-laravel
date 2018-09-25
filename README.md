@@ -18,6 +18,8 @@ minor version bump = minor-level updates to jQuery
 major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
 
+For [**Laravel 5.5, 5.6 or 5.7**](http://laravel.com/docs/5.7) supports see [jQuery-Laravel **2.4 branch**](https://github.com/efficiently/jquery-laravel/tree/2.4)
+
 For [Laravel 5.1 or 5.2](http://laravel.com/docs/5.2) supports see [jQuery-Laravel **2.1 branch**](https://github.com/efficiently/jquery-laravel/tree/2.1)
 
 For [Laravel 5.0](http://laravel.com/docs/5.0) supports see [jQuery-Laravel **2.0 branch**](https://github.com/efficiently/jquery-laravel/tree/2.0)
