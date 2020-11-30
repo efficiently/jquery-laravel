@@ -84,7 +84,7 @@ class JqlHelpersTest extends JqlTestCase
         $this->assertEquals($expect, $former);
 
         $expect2 = '<form accept-charset="utf-8" class="form-horizontal edit_project" id="edit_project_3" method="POST" action="http://localhost/projects/3">'.
-            '<input class="form-control" type="hidden" name="_method" value="PATCH">';
+            '<input type="hidden" name="_method" value="PATCH">';
         $this->assertNotEquals($expect2, $former);
 
         // Existing Project
@@ -93,7 +93,7 @@ class JqlHelpersTest extends JqlTestCase
         $project2->exists = true;
 
         $former2 = (string) former_for($project2);
-        $this->assertEquals($expect2, $former2);
+        $this->assertStringContainsString($expect2, $former2);
     }
 
     public function testButtonTo()

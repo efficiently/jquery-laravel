@@ -7,7 +7,7 @@ abstract class JqlTestCase extends Orchestra\Testbench\TestCase
     protected $app;
     protected $router;
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         m::close();

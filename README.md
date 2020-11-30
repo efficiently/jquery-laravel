@@ -1,6 +1,6 @@
-# jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.4)](http://travis-ci.org/efficiently/jquery-laravel)
+# jquery-laravel [![Build Status](https://travis-ci.org/efficiently/jquery-laravel.png?branch=2.5)](http://travis-ci.org/efficiently/jquery-laravel)
 
-jQuery! For Laravel 5.5, 5.6 and 5.7! So great.
+jQuery! For Laravel 6, 7 and 8! So great.
 
 This package provides:
 
@@ -18,6 +18,8 @@ minor version bump = minor-level updates to jQuery
 major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
 
+For [Laravel 5.5, 5.6 or 5.7](http://laravel.com/docs/5.7) supports see [jQuery-Laravel **2.4 branch**](https://github.com/efficiently/jquery-laravel/tree/2.4)
+
 For [Laravel 5.1, 5.2, 5.3 or 5.4](http://laravel.com/docs/5.4) supports see [jQuery-Laravel **2.3 branch**](https://github.com/efficiently/jquery-laravel/tree/2.3)
 
 For [Laravel 5.1 or 5.2](http://laravel.com/docs/5.2) supports see [jQuery-Laravel **2.1 branch**](https://github.com/efficiently/jquery-laravel/tree/2.1)
@@ -30,51 +32,11 @@ For [Laravel 4.1 or 4.2](http://laravel.com/docs/4.2) supports see [jQuery-Larav
 
 You must [install Node.js](http://nodejs.org) on your computer (development environment).
 
-This package version is **only** compatible with **PHP >= 7.0** and **Laravel >= 5.5** framework.
+This package version is **only** compatible with **PHP >= 7.2** and **Laravel >= 6** framework.
 
 ## Installation
 
-Read the wiki [Installation Instructions](https://github.com/efficiently/jquery-laravel/wiki/Installation-Instructions) page, if you don't want to use the Larasset package
-
-Or, if you want to use the [Larasset](https://github.com/efficiently/larasset) package which include `jquery-laravel` by default:
-
-1. Just make a new app
-
-    ```sh
-    composer create-project laravel/laravel your-project-name --prefer-dist
-    ```
-
-    1. Go inside your new app path
-
-        ```sh
-        cd your-project-name
-        ```
-
-2. Then install Larasset package
-
-    Click [here](https://github.com/efficiently/larasset/blob/1.3/README.md#installation) to follow the installation instructions of this package.
-
-NOTE: The `jquery.js` and `jquery-ujs.js` files will be added to the asset pipeline and available for you to use.
-If they're not already in `resources/js/app.js` by default, add these lines:
-
-```js
-//= require jquery
-//= require jquery_ujs
-```
-
-If you want to use jQuery 2, you can require `jquery2` instead:
-
-```js
-//= require jquery2
-//= require jquery_ujs
-```
-
-And if you want to use jQuery 3, you can require `jquery3`:
-
-```js
-//= require jquery3
-//= require jquery_ujs
-```
+Read the wiki [Installation Instructions](https://github.com/efficiently/jquery-laravel/wiki/Installation-Instructions) page.
 
 ## Contributing
 

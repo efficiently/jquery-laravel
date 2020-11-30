@@ -6,7 +6,7 @@ use Jql\Http\Controllers\ProjectsController;
 
 class JqlControllerAdditionsTest extends JqlTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         Route::resource('projects', 'ProjectsController');
@@ -30,10 +30,10 @@ class JqlControllerAdditionsTest extends JqlTestCase
         $expectDefaultLayout = '<title>jQuery-Laravel with default layout</title>';
         $expectProjectName = 'Project 2';
 
-        $this->assertContains($expectDefaultLayout, $response->getContent());
-        $this->assertNotContains($expectDefaultLayout.' foo', $response->getContent());
-        $this->assertContains($expectProjectName, $response->getContent());
-        $this->assertNotContains($expectProjectName.' foo', $response->getContent());
+        $this->assertStringContainsString($expectDefaultLayout, $response->getContent());
+        $this->assertStringNotContainsString($expectDefaultLayout.' foo', $response->getContent());
+        $this->assertStringContainsString($expectProjectName, $response->getContent());
+        $this->assertStringNotContainsString($expectProjectName.' foo', $response->getContent());
     }
 
     public function testRenderMethodWithCustomLayout()
@@ -51,10 +51,10 @@ class JqlControllerAdditionsTest extends JqlTestCase
         $expectDefaultLayout = '<title>jQuery-Laravel with custom layout</title>';
         $expectProjectName = 'Project 3';
 
-        $this->assertContains($expectDefaultLayout, $response->getContent());
-        $this->assertNotContains($expectDefaultLayout.' foo', $response->getContent());
-        $this->assertContains($expectProjectName, $response->getContent());
-        $this->assertNotContains($expectProjectName.' foo', $response->getContent());
+        $this->assertStringContainsString($expectDefaultLayout, $response->getContent());
+        $this->assertStringNotContainsString($expectDefaultLayout.' foo', $response->getContent());
+        $this->assertStringContainsString($expectProjectName, $response->getContent());
+        $this->assertStringNotContainsString($expectProjectName.' foo', $response->getContent());
     }
 
     public function testRenderMethodWithoutLayout()
@@ -72,9 +72,9 @@ class JqlControllerAdditionsTest extends JqlTestCase
         $expectDefaultLayout = '<title>jQuery-Laravel without layout</title>';
         $expectProjectName = 'Project 4';
 
-        $this->assertContains($expectDefaultLayout, $response->getContent());
-        $this->assertContains($expectProjectName, $response->getContent());
-        $this->assertNotContains($expectProjectName.' foo', $response->getContent());
+        $this->assertStringContainsString($expectDefaultLayout, $response->getContent());
+        $this->assertStringContainsString($expectProjectName, $response->getContent());
+        $this->assertStringNotContainsString($expectProjectName.' foo', $response->getContent());
     }
 
     public function testRenderMethodWithJSRequest()
@@ -92,9 +92,9 @@ class JqlControllerAdditionsTest extends JqlTestCase
         $expectDefaultLayout = '<title>jQuery-Laravel tests</title>';
         $expectProjectJson = json_encode($project);
 
-        $this->assertNotContains($expectDefaultLayout, $response->getContent());
-        $this->assertContains($expectProjectJson, $response->getContent());
-        $this->assertNotContains($expectProjectJson.' foo', $response->getContent());
+        $this->assertStringNotContainsString($expectDefaultLayout, $response->getContent());
+        $this->assertStringContainsString($expectProjectJson, $response->getContent());
+        $this->assertStringNotContainsString($expectProjectJson.' foo', $response->getContent());
     }
 
     protected function mockProject($project)

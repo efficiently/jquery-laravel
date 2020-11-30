@@ -1,12 +1,12 @@
 {
     "name": "efficiently/jquery-laravel",
-    "description": "This package provides jQuery and the jQuery-ujs driver for your Laravel >= 5.5 application.",
+    "description": "This package provides jQuery and the jQuery-ujs driver for your Laravel >= 6 application.",
     "keywords": [
         "jquery",
         "laravel",
-        "laravel 5.5",
-        "laravel 5.6",
-        "laravel 5.7",
+        "laravel 6",
+        "laravel 7",
+        "laravel 8",
         "larasset",
         "assets",
         "asset pipeline",
@@ -24,15 +24,16 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
-        "illuminate/support": "~5.5.0||~5.6.0||~5.7.0",
-        "laravelcollective/html": "~5.5.0||~5.6.0||~5.7.0"
+        "php": "^7.2||^8.0",
+        "illuminate/support": "~6.0||~7.0||~8.0",
+        "laravelcollective/html": "~6.0||~7.0||~8.0",
+        "laravel/helpers": "^1.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "~6.0||~7.0",
-        "mockery/mockery": "~1.0",
-        "orchestra/testbench": "~3.5.0||~3.6.0||~3.7.0",
-        "anahkiasen/former": "~4.1.0"
+        "phpunit/phpunit": "^8.2.3||~9.0",
+        "mockery/mockery": "~1.3.3||^1.4.2",
+        "orchestra/testbench": "~4.0||~5.0||~6.0",
+        "anahkiasen/former": "~4.5.0"
     },
     "autoload": {
         "files": [
