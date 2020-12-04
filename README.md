@@ -17,6 +17,7 @@ patch version bump = updates to jquery-ujs, jquery-laravel, and patch-level upda
 minor version bump = minor-level updates to jQuery
 major version bump = major-level updates to jQuery and updates to Laravel/Larasset which may be backwards-incompatible
 ```
+For [Laravel 6.x, 7.x or 8.x](http://laravel.com/docs/8.x) supports see [jQuery-Laravel **2.5 branch**](https://github.com/efficiently/jquery-laravel/tree/2.5)
 
 For [Laravel 5.1, 5.2, 5.3 or 5.4](http://laravel.com/docs/5.4) supports see [jQuery-Laravel **2.3 branch**](https://github.com/efficiently/jquery-laravel/tree/2.3)
 
