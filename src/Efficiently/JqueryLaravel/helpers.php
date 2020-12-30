@@ -227,6 +227,7 @@ if (! function_exists('button_to')) {
      * 'data-disable-with' - Value of this parameter will be used as the value for a disabled version of the submit button when the form is submitted. This feature is provided by the unobtrusive JavaScript driver.
      * 'form' - This array will be form attributes
      * 'formClass' - This controls the class of the form within which the submit button will be placed. By default it will be 'button_to'.
+     * 'params' - Array of parameters to be rendered as hidden fields within the form.
      * @return string
      */
     function button_to($name, array $options = [])
@@ -247,6 +248,7 @@ if (! function_exists('button_to')) {
         if (array_get($options, 'data-remote')) {
             $formOptions['data-remote'] = array_pull($options, 'data-remote');
         }
+        $params = array_pull($options, 'params', []);
 
         $formOptions = array_merge($formOptions, array_pull($options, 'form', []));
 
@@ -257,8 +259,12 @@ if (! function_exists('button_to')) {
         ) {
             $submitButton = Button::withValue($name)->withAttributes($options)->submit();
         }
+        $hiddenInputs = '';
+        foreach ($params as $name => $value) {
+            $hiddenInputs .= app('form')->hidden($name, $value);
+        }
 
-        return app('form')->open($formOptions).'<div>'.$submitButton.'</div>'.app('form')->close();
+        return app('form')->open($formOptions).$hiddenInputs.'<div>'.$submitButton.'</div>'.app('form')->close();
     }
 }
 
