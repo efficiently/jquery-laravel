@@ -23,6 +23,23 @@ class JqlHelpersTest extends JqlTestCase
 
         $domId2 = dom_id($project2);
         $this->assertEquals($expect2, $domId2);
+
+        // New User
+        $user = new Jql\Models\User;
+        $domIdUser = dom_id($user);
+        $expectUser = 'create_user';
+        $this->assertEquals($expectUser, $domIdUser);
+
+        $expectUser2 = 'user_5';
+        $this->assertNotEquals($expectUser2, $domIdUser);
+
+        // Existing User
+        $user2 = clone $user;
+        $user2->id = 5;
+        $user2->exists = true;
+
+        $domIdUser2 = dom_id($user2);
+        $this->assertEquals($expectUser2, $domIdUser2);
     }
 
     public function testFormId()
@@ -44,6 +61,24 @@ class JqlHelpersTest extends JqlTestCase
 
         $formId2 = form_id($project2);
         $this->assertEquals($expect2, $formId2);
+
+        // New User
+        $user = new Jql\Models\User;
+
+        $formIdUser = form_id($user);
+        $expectUser = 'create_user';
+        $this->assertEquals($expectUser, $formIdUser);
+
+        $expectUser2 = 'edit_user_6';
+        $this->assertNotEquals($expectUser2, $formIdUser);
+
+        // Existing User
+        $user2 = clone $user;
+        $user2->id = 6;
+        $user2->exists = true;
+
+        $formIdUser2 = form_id($user2);
+        $this->assertEquals($expectUser2, $formIdUser2);
     }
 
     public function testFormFor()

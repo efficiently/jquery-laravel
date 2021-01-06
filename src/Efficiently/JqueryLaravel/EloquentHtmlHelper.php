@@ -2,6 +2,8 @@
 
 namespace Efficiently\JqueryLaravel;
 
+use Illuminate\Support\Arr;
+
 class EloquentHtmlHelper
 {
     /**
@@ -78,14 +80,21 @@ class EloquentHtmlHelper
     }
 
     /**
-     * Remove Root namespace. E.G 'App\Message' -> 'Message'
+     * Remove Root namespace. E.G. 'App\Message' -> 'Message'
+     * Or 'App\Models\User' -> 'User'
      * @param string $classname
      */
     protected function removeRootNamespace($classname)
     {
         $namespaces = $this->splitNamespaces($classname);
         if (count($namespaces) > 1) {
-            $classname = implode('\\', array_slice($namespaces, 1));
+            $namespaces = array_slice($namespaces, 1);
+            if (count($namespaces) > 1 &&
+                Arr::get($namespaces, 0) === 'Models'
+            ) {
+                $namespaces = array_slice($namespaces, 1);
+            }
+            $classname = implode('\\', $namespaces);
         }
 
         return $classname;
