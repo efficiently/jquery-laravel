@@ -107,8 +107,10 @@ class JqlHelpersTest extends JqlTestCase
             '<div><input type="submit" value="Create"></div></form>';
         $this->assertEquals($expect, $form);
 
-        $expect2 = '<form method="POST" action="http://www.example.com" accept-charset="UTF-8" class="button_to" data-remote="true"><input name="_method" type="hidden" value="DELETE">'.
+        $expect2 = '<form method="POST" action="http://www.example.com/users/1" accept-charset="UTF-8" class="button_to" data-remote="true">'.
+            '<input name="_method" type="hidden" value="DELETE">'.
             '<input name="_token" type="hidden">'.
+            '<input name="type" type="hidden" value="App\User">'.
             '<div><input data-confirm="Are you sure?" data-disable-with="loading..." type="submit" value="Destroy"></div></form>';
         $this->assertNotEquals($expect2, $form);
 
@@ -116,11 +118,12 @@ class JqlHelpersTest extends JqlTestCase
         $form2 = button_to(
             'Destroy',
             [
-                'url' => 'http://www.example.com',
+                'url' => 'http://www.example.com/users/1',
                 'method' => 'delete',
                 'data-remote' => 'true',
                 'data-confirm' => 'Are you sure?',
-                'data-disable-with' => 'loading...'
+                'data-disable-with' => 'loading...',
+                'params' => ['type' => 'App\User'],
             ]
         );
         $this->assertEquals($expect2, $form2);
