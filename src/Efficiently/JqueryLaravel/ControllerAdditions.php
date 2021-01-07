@@ -5,6 +5,8 @@ namespace Efficiently\JqueryLaravel;
 use Blade;
 use Request;
 use Response;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 trait ControllerAdditions
 {
@@ -57,7 +59,9 @@ trait ControllerAdditions
             $format = array_keys($view)[0];
             $view = array_values($view)[0];
             if (is_string($view)) {
-                if (! ends_with($view, '_'.$format) && view()->exists($view.'_'.$format)) {
+                if (! Str::endsWith($view, '_'.$format)
+                    && view()->exists($view.'_'.$format)
+                ) {
                     $view = $view.'_'.$format;
                 } else {
                     // Inline view
@@ -91,7 +95,7 @@ trait ControllerAdditions
      */
     protected function makeLayout($view, $options = [])
     {
-        $layout = array_pull($options, 'layout');
+        $layout = Arr::pull($options, 'layout');
         $this->setupLayout($layout);
         if ($this->layout &&
             (is_string($view) || $this->layout->getName() !== $view->getName())
@@ -110,7 +114,7 @@ trait ControllerAdditions
      */
     protected function makeResponse($view, $options = [])
     {
-        $format = array_pull($options, 'format');
+        $format = Arr::pull($options, 'format');
         $defaultOptions = ['status' => 200, 'headers' => []];
         $options = array_merge($defaultOptions, $options);
 

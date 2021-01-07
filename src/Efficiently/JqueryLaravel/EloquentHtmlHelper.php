@@ -3,6 +3,7 @@
 namespace Efficiently\JqueryLaravel;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class EloquentHtmlHelper
 {
@@ -63,7 +64,7 @@ class EloquentHtmlHelper
      */
     public function domClass($recordOrClass, $prefix = null)
     {
-        $singular = snake_case(camel_case(preg_replace('/\\\\/', ' ', $this->modelNameFromRecordOrClassname($recordOrClass))));
+        $singular = Str::snake(Str::camel(preg_replace('/\\\\/', ' ', $this->modelNameFromRecordOrClassname($recordOrClass))));
         return $prefix ? $prefix.'_'.$singular : $singular;
     }
 

@@ -2,6 +2,8 @@
 
 namespace Efficiently\JqueryLaravel;
 
+use Illuminate\Support\Arr;
+
 class BladeExtensions
 {
     protected $blade;
@@ -32,8 +34,8 @@ class BladeExtensions
             // E.g. "@div_tag blabla @end_div_tag" becomes "@content_tag('div') blabla @end_contag_tag('div')"
             $contentTagsPattern = '/@('.$contentTagsPattern.')_(tag)(\(([^\r\n]*?)\)|[\r\n\s\t]*)([\r\n\s\t]+)/';
             if (preg_match($contentTagsPattern, $view, $result)) {
-                $attributes = array_filter(preg_split('/\s?,\s?/', array_get($result, 4, [])));
-                array_unshift($attributes, '"'.array_get($result, 1).'"');
+                $attributes = array_filter(preg_split('/\s?,\s?/', Arr::get($result, 4, [])));
+                array_unshift($attributes, '"'.Arr::get($result, 1).'"');
                 $replacement = '@content_$2('.implode(", ", $attributes).')$5';
                 $view = preg_replace($contentTagsPattern, $replacement, $view);
             }
@@ -52,7 +54,7 @@ class BladeExtensions
             // E.g. "blabla @enddiv_for" becomes "blabla @endcontag_tag_for('div')"
             $contentTagsPattern = '/@end_?('.$contentTagsPattern.')_(tag|tag_for|for)([\r\n\s\t]+)/';
             if (preg_match($contentTagsPattern, $view, $matches)) {
-                $type = array_get($matches, 2);
+                $type = Arr::get($matches, 2);
                 if ($type === 'for') {
                     $type = 'tag_'.$type;
                 }
@@ -64,8 +66,8 @@ class BladeExtensions
             $pattern = '/@content_?tag\s?(\(([^\r\n]+?)\)|[\r\n\s\t]*)([\r\n\s\t]+)/s';
             if (preg_match_all($pattern, $view, $results, PREG_SET_ORDER)) {
                 foreach ($results as $index => $result) {
-                    $attributes = preg_split('/\s?,\s?/', array_get($result, 2, []));
-                    $tagName = array_get(array_filter($attributes), 0, "'div'");
+                    $attributes = preg_split('/\s?,\s?/', Arr::get($result, 2, []));
+                    $tagName = Arr::get(array_filter($attributes), 0, "'div'");
 
                     $options = count($attributes) >= 2 ? implode(',', array_slice($attributes, 1)) : "[]";
                     $replacement = "<?php echo '<'.$tagName.app('html')->attributes($options).'>';$3 ?>";
@@ -77,8 +79,8 @@ class BladeExtensions
             $pattern = '/@end_?content_?tag\s?(\(([^\r\n]+?)\)|[\r\n\s\t]*)([\r\n\s\t]+)/s';
             if (preg_match_all($pattern, $view, $results, PREG_SET_ORDER)) {
                 foreach ($results as $index => $result) {
-                    $attributes = preg_split('/\s?,\s?/', array_get($result, 2, []));
-                    $tagName = array_get(array_filter($attributes), 0, "'div'");
+                    $attributes = preg_split('/\s?,\s?/', Arr::get($result, 2, []));
+                    $tagName = Arr::get(array_filter($attributes), 0, "'div'");
 
                     $replacement = "<?php echo '</'.$tagName.'>';$3 ?>";
                     $view = preg_replace($pattern, $replacement, $view, 1);
@@ -89,18 +91,18 @@ class BladeExtensions
             $pattern = '/@content_?tag_?for\s?\(([^\r\n]+?)\)(\s+as\s?\(([^\r\n]+?)\)|)([\r\n\s\t]+)/s';
             if (preg_match_all($pattern, $view, $results, PREG_SET_ORDER)) {
                 foreach ($results as $index => $result) {
-                    $attributes = preg_split('/\s?,\s?/', array_get($result, 1, []));
-                    $tagName = array_get(array_filter($attributes), 0, "'div'");
-                    $record = array_get($attributes, 1);
-                    $prefix = array_get($attributes, 2, "null");
+                    $attributes = preg_split('/\s?,\s?/', Arr::get($result, 1, []));
+                    $tagName = Arr::get(array_filter($attributes), 0, "'div'");
+                    $record = Arr::get($attributes, 1);
+                    $prefix = Arr::get($attributes, 2, "null");
                     $options = count($attributes) >= 4 ? implode(',', array_slice($attributes, 3)) : "[]";
 
-                    $asOption = preg_split('/, */', array_get($result, 3));
+                    $asOption = preg_split('/, */', Arr::get($result, 3));
 
-                    $recordName = array_get($asOption, 0);
+                    $recordName = Arr::get($asOption, 0);
                     $recordName = preg_replace('/^\$/', '', $recordName ?: $record);
 
-                    $recordIndex = array_get($asOption, 1);
+                    $recordIndex = Arr::get($asOption, 1);
                     $recordIndex = preg_replace('/^\$/', '', $recordIndex ?: $recordName.'Index');
 
                     $replacement = <<<EOT
@@ -114,7 +116,7 @@ class BladeExtensions
         \${$recordIndex}++;
         \$options = (array) $options;
         \$options['class'] = implode(" ",
-            array_filter([dom_class(\${$recordName}, $prefix), array_get(\$options, 'class')])
+            array_filter([dom_class(\${$recordName}, $prefix), \Illuminate\Support\Arr::get(\$options, 'class')])
         );
         \$options['id'] = dom_id(\${$recordName}, $prefix);
         echo '<'.$tagName.app('html')->attributes(\$options).'>';
@@ -128,8 +130,8 @@ EOT;
             $pattern = '/@end_?content_?tag_?for\s?(\(([^\r\n]+?)\)|[\r\n\s\t]*)([\r\n\s\t]+)/s';
             if (preg_match_all($pattern, $view, $results, PREG_SET_ORDER)) {
                 foreach ($results as $index => $result) {
-                    $attributes = preg_split('/\s?,\s?/', array_get($result, 2, []));
-                    $tagName = array_get(array_filter($attributes), 0, "'div'");
+                    $attributes = preg_split('/\s?,\s?/', Arr::get($result, 2, []));
+                    $tagName = Arr::get(array_filter($attributes), 0, "'div'");
 
                     $replacement = <<<EOT
 <?php

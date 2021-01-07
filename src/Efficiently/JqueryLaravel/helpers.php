@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+
+
 if (! function_exists('dom_id')) {
     /**
      * The DOM id convention is to use the singular form of an object or class with the id following an underscore.
@@ -52,25 +56,25 @@ if (! function_exists('form_for')) {
      */
     function form_for($model, array $options = [])
     {
-        $prefix = array_get($options, 'prefix');
-        $fallbackPrefix = array_get($options, 'fallbackPrefix', 'create');
+        $prefix = Arr::get($options, 'prefix');
+        $fallbackPrefix = Arr::get($options, 'fallbackPrefix', 'create');
 
-        if (! array_get($options, 'id')) {
+        if (! Arr::get($options, 'id')) {
             $options['id'] = form_id($model, $fallbackPrefix);
         }
 
-        if (! array_get($options, 'class')) {
+        if (! Arr::get($options, 'class')) {
             $prefix = $prefix ?: ($model->exists ? 'edit' : 'create');
             $options['class'] = dom_class($model, $prefix);
         }
 
-        if (! array_get($options, 'route') && ! array_get($options, 'url') && ! array_get($options, 'action')) {
+        if (! Arr::get($options, 'route') && ! Arr::get($options, 'url') && ! Arr::get($options, 'action')) {
             // FIXME: ? If a model have a sub namespace dom_class('App\Products\Item') => the route prefix will be 'products_items'
-            $routePrefix = str_plural(dom_class($model));
+            $routePrefix = Str::plural(dom_class($model));
             $options['route'] = $model->exists ? [$routePrefix.'.update', $model->id] : $routePrefix.'.store';
         }
 
-        if (! array_get($options, 'method')) {
+        if (! Arr::get($options, 'method')) {
             $options['method'] = $model->exists ? 'patch' : 'post';
         }
 
@@ -113,44 +117,44 @@ if (! function_exists('former_for')) {
     function former_for($model, array $options = [])
     {
         if (class_exists("\Former")) {
-            $prefix = array_get($options, 'prefix');
-            $fallbackPrefix = array_get($options, 'fallbackPrefix', 'create');
+            $prefix = Arr::get($options, 'prefix');
+            $fallbackPrefix = Arr::get($options, 'fallbackPrefix', 'create');
 
-            if (! array_get($options, 'id')) {
+            if (! Arr::get($options, 'id')) {
                 $options['id'] = form_id($model, $fallbackPrefix);
             }
 
-            if (! array_get($options, 'class')) {
+            if (! Arr::get($options, 'class')) {
                 $prefix = $prefix ?: ($model->exists ? 'edit' : 'create');
                 $options['class'] = dom_class($model, $prefix);
             }
 
-            if (is_null(array_get($options, 'route')) && is_null(array_get($options, 'action')) && is_null(array_get($options, 'controller'))) {
-                $routePrefix = str_plural(dom_class($model));
+            if (is_null(Arr::get($options, 'route')) && is_null(Arr::get($options, 'action')) && is_null(Arr::get($options, 'controller'))) {
+                $routePrefix = Str::plural(dom_class($model));
                 $options['route'] = $model->exists ? [$routePrefix.'.update', $model->id] : $routePrefix.'.store';
             }
 
-            if (! array_get($options, 'method')) {
+            if (! Arr::get($options, 'method')) {
                 $options['method'] = $model->exists ? 'patch' : 'post';
             }
 
-            $class = array_pull($options, 'class');
-            $method = array_pull($options, 'method');
+            $class = Arr::pull($options, 'class');
+            $method = Arr::pull($options, 'method');
 
             $actionType = null;
             $action = null;
-            if (array_get($options, 'action')) {
+            if (Arr::get($options, 'action')) {
                 $actionType = 'action';
-                $action = array_pull($options, 'action');
-            } elseif (array_get($options, 'controller')) {
+                $action = Arr::pull($options, 'action');
+            } elseif (Arr::get($options, 'controller')) {
                 $actionType = 'controller';
-                $action = array_pull($options, 'controller');
-            } elseif (array_get($options, 'route')) {
+                $action = Arr::pull($options, 'controller');
+            } elseif (Arr::get($options, 'route')) {
                 $actionType = 'route';
-                $action = array_pull($options, 'route');
+                $action = Arr::pull($options, 'route');
             }
 
-            $open = array_pull($options, 'open', 'open');
+            $open = Arr::pull($options, 'open', 'open');
 
             $former = app('former');
 
@@ -233,24 +237,24 @@ if (! function_exists('button_to')) {
     function button_to($name, array $options = [])
     {
         $formOptions = [
-            'method' => array_pull($options, 'method', 'post'),
-            'class' => array_pull($options, 'formClass', 'button_to')
+            'method' => Arr::pull($options, 'method', 'post'),
+            'class' => Arr::pull($options, 'formClass', 'button_to')
         ];
-        if (array_get($options, 'url')) {
-            $formOptions['url'] = array_pull($options, 'url');
+        if (Arr::get($options, 'url')) {
+            $formOptions['url'] = Arr::pull($options, 'url');
         }
-        if (array_get($options, 'route')) {
-            $formOptions['route'] = array_pull($options, 'route');
+        if (Arr::get($options, 'route')) {
+            $formOptions['route'] = Arr::pull($options, 'route');
         }
-        if (array_get($options, 'action')) {
-            $formOptions['action'] = array_pull($options, 'action');
+        if (Arr::get($options, 'action')) {
+            $formOptions['action'] = Arr::pull($options, 'action');
         }
-        if (array_get($options, 'data-remote')) {
-            $formOptions['data-remote'] = array_pull($options, 'data-remote');
+        if (Arr::get($options, 'data-remote')) {
+            $formOptions['data-remote'] = Arr::pull($options, 'data-remote');
         }
-        $params = array_pull($options, 'params', []);
+        $params = Arr::pull($options, 'params', []);
 
-        $formOptions = array_merge($formOptions, array_pull($options, 'form', []));
+        $formOptions = array_merge($formOptions, Arr::pull($options, 'form', []));
 
         $submitButton = app('form')->submit($name, $options);
         if (class_exists('Button') &&
@@ -282,7 +286,7 @@ if (! function_exists('render_view')) {
      */
     function render_view($view, $parameters = [], $section = null)
     {
-        $view = view($view, $parameters, array_except(get_defined_vars(), ['__data', '__path']))->render();
+        $view = view($view, $parameters, Arr::except(get_defined_vars(), ['__data', '__path']))->render();
         if ($section) {
             $view = $view.view()->yieldContent($section);
         }

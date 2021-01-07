@@ -90,7 +90,7 @@ EOT;
         \$projectIndex++;
         \$options = (array) [];
         \$options['class'] = implode(" ",
-            array_filter([dom_class(\$project, null), array_get(\$options, 'class')])
+            array_filter([dom_class(\$project, null), \Illuminate\Support\Arr::get(\$options, 'class')])
         );
         \$options['id'] = dom_id(\$project, null);
         echo '<'.'div'.app('html')->attributes(\$options).'>';
@@ -129,7 +129,7 @@ EOT;
         \$projectIndex++;
         \$options = (array) ['remote' => 'true'];
         \$options['class'] = implode(" ",
-            array_filter([dom_class(\$project, 'edit_prefix'), array_get(\$options, 'class')])
+            array_filter([dom_class(\$project, 'edit_prefix'), \Illuminate\Support\Arr::get(\$options, 'class')])
         );
         \$options['id'] = dom_id(\$project, 'edit_prefix');
         echo '<'.'div'.app('html')->attributes(\$options).'>';
