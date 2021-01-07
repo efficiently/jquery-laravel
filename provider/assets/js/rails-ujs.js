@@ -2,7 +2,7 @@
 Unobtrusive JavaScript
 https://github.com/rails/rails/blob/master/actionview/app/assets/javascripts
 Released under the MIT license
- */
+ */;
 
 (function() {
   var context = this;
@@ -31,6 +31,21 @@ Released under the MIT license
   var Rails = context.Rails;
 
   (function() {
+    (function() {
+      var nonce;
+
+      nonce = null;
+
+      Rails.loadCSPNonce = function() {
+        var ref;
+        return nonce = (ref = document.querySelector("meta[name=csp-nonce]")) != null ? ref.content : void 0;
+      };
+
+      Rails.cspNonce = function() {
+        return nonce != null ? nonce : Rails.loadCSPNonce();
+      };
+
+    }).call(this);
     (function() {
       var expando, m;
 
@@ -101,7 +116,7 @@ Released under the MIT license
 
     }).call(this);
     (function() {
-      var CustomEvent, fire, matches;
+      var CustomEvent, fire, matches, preventDefault;
 
       matches = Rails.matches;
 
@@ -115,6 +130,19 @@ Released under the MIT license
           return evt;
         };
         CustomEvent.prototype = window.Event.prototype;
+        preventDefault = CustomEvent.prototype.preventDefault;
+        CustomEvent.prototype.preventDefault = function() {
+          var result;
+          result = preventDefault.call(this);
+          if (this.cancelable && !this.defaultPrevented) {
+            Object.defineProperty(this, 'defaultPrevented', {
+              get: function() {
+                return true;
+              }
+            });
+          }
+          return result;
+        };
       }
 
       fire = Rails.fire = function(obj, name, data) {
@@ -151,9 +179,9 @@ Released under the MIT license
 
     }).call(this);
     (function() {
-      var AcceptHeaders, CSRFProtection, createXHR, fire, prepareOptions, processResponse;
+      var AcceptHeaders, CSRFProtection, createXHR, cspNonce, fire, prepareOptions, processResponse;
 
-      CSRFProtection = Rails.CSRFProtection, fire = Rails.fire;
+      cspNonce = Rails.cspNonce, CSRFProtection = Rails.CSRFProtection, fire = Rails.fire;
 
       AcceptHeaders = {
         '*': '*/*',
@@ -168,8 +196,8 @@ Released under the MIT license
         var xhr;
         options = prepareOptions(options);
         xhr = createXHR(options, function() {
-          var response;
-          response = processResponse(xhr.response, xhr.getResponseHeader('Content-Type'));
+          var ref, response;
+          response = processResponse((ref = xhr.response) != null ? ref : xhr.responseText, xhr.getResponseHeader('Content-Type'));
           if (Math.floor(xhr.status / 100) === 2) {
             if (typeof options.success === "function") {
               options.success(response, xhr.statusText, xhr);
@@ -181,13 +209,11 @@ Released under the MIT license
           }
           return typeof options.complete === "function" ? options.complete(xhr, xhr.statusText) : void 0;
         });
-        if (typeof options.beforeSend === "function") {
-          options.beforeSend(xhr, options);
+        if ((options.beforeSend != null) && !options.beforeSend(xhr, options)) {
+          return false;
         }
         if (xhr.readyState === XMLHttpRequest.OPENED) {
           return xhr.send(options.data);
-        } else {
-          return fire(document, 'ajaxStop');
         }
       };
 
@@ -221,8 +247,8 @@ Released under the MIT license
         }
         if (!options.crossDomain) {
           xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+          CSRFProtection(xhr);
         }
-        CSRFProtection(xhr);
         xhr.withCredentials = !!options.withCredentials;
         xhr.onreadystatechange = function() {
           if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -241,6 +267,7 @@ Released under the MIT license
             } catch (error) {}
           } else if (type.match(/\b(?:java|ecma)script\b/)) {
             script = document.createElement('script');
+            script.setAttribute('nonce', cspNonce());
             script.text = response;
             document.head.appendChild(script).parentNode.removeChild(script);
           } else if (type.match(/\b(xml|html|svg)\b/)) {
@@ -290,7 +317,10 @@ Released under the MIT license
         }
         params = [];
         inputs.forEach(function(input) {
-          if (!input.name) {
+          if (!input.name || input.disabled) {
+            return;
+          }
+          if (matches(input, 'fieldset[disabled] *')) {
             return;
           }
           if (matches(input, 'select')) {
@@ -343,6 +373,10 @@ Released under the MIT license
         }
       };
 
+      Rails.confirm = function(message, element) {
+        return confirm(message);
+      };
+
       allowAction = function(element) {
         var answer, callback, message;
         message = element.getAttribute('data-confirm');
@@ -352,7 +386,7 @@ Released under the MIT license
         answer = false;
         if (fire(element, 'confirm')) {
           try {
-            answer = confirm(message);
+            answer = Rails.confirm(message, element);
           } catch (error) {}
           callback = fire(element, 'confirm:complete', [answer]);
         }
@@ -361,7 +395,7 @@ Released under the MIT license
 
     }).call(this);
     (function() {
-      var disableFormElement, disableFormElements, disableLinkElement, enableFormElement, enableFormElements, enableLinkElement, formElements, getData, matches, setData, stopEverything;
+      var disableFormElement, disableFormElements, disableLinkElement, enableFormElement, enableFormElements, enableLinkElement, formElements, getData, isXhrRedirect, matches, setData, stopEverything;
 
       matches = Rails.matches, getData = Rails.getData, setData = Rails.setData, stopEverything = Rails.stopEverything, formElements = Rails.formElements;
 
@@ -375,7 +409,14 @@ Released under the MIT license
 
       Rails.enableElement = function(e) {
         var element;
-        element = e instanceof Event ? e.target : e;
+        if (e instanceof Event) {
+          if (isXhrRedirect(e)) {
+            return;
+          }
+          element = e.target;
+        } else {
+          element = e;
+        }
         if (matches(element, Rails.linkDisableSelector)) {
           return enableLinkElement(element);
         } else if (matches(element, Rails.buttonDisableSelector) || matches(element, Rails.formEnableSelector)) {
@@ -399,6 +440,9 @@ Released under the MIT license
 
       disableLinkElement = function(element) {
         var replacement;
+        if (getData(element, 'ujs:disabled')) {
+          return;
+        }
         replacement = element.getAttribute('data-disable-with');
         if (replacement != null) {
           setData(element, 'ujs:enable-with', element.innerHTML);
@@ -425,6 +469,9 @@ Released under the MIT license
 
       disableFormElement = function(element) {
         var replacement;
+        if (getData(element, 'ujs:disabled')) {
+          return;
+        }
         replacement = element.getAttribute('data-disable-with');
         if (replacement != null) {
           if (matches(element, 'button')) {
@@ -456,6 +503,12 @@ Released under the MIT license
         }
         element.disabled = false;
         return setData(element, 'ujs:disabled', null);
+      };
+
+      isXhrRedirect = function(event) {
+        var ref, xhr;
+        xhr = (ref = event.detail) != null ? ref[0] : void 0;
+        return (xhr != null ? xhr.getResponseHeader("X-Xhr-Redirect") : void 0) != null;
       };
 
     }).call(this);
@@ -552,7 +605,7 @@ Released under the MIT license
               return fire(element, 'ajax:send', [xhr]);
             } else {
               fire(element, 'ajax:stopped');
-              return xhr.abort();
+              return false;
             }
           },
           success: function() {
@@ -594,24 +647,29 @@ Released under the MIT license
         return setData(form, 'ujs:submit-button-formmethod', button.getAttribute('formmethod'));
       };
 
-      Rails.handleMetaClick = function(e) {
-        var data, link, metaClick, method;
+      Rails.preventInsignificantClick = function(e) {
+        var data, insignificantMetaClick, link, metaClick, method, nonPrimaryMouseClick;
         link = this;
         method = (link.getAttribute('data-method') || 'GET').toUpperCase();
         data = link.getAttribute('data-params');
         metaClick = e.metaKey || e.ctrlKey;
-        if (metaClick && method === 'GET' && !data) {
+        insignificantMetaClick = metaClick && method === 'GET' && !data;
+        nonPrimaryMouseClick = (e.button != null) && e.button !== 0;
+        if (nonPrimaryMouseClick || insignificantMetaClick) {
           return e.stopImmediatePropagation();
         }
       };
 
     }).call(this);
     (function() {
-      var $, CSRFProtection, delegate, disableElement, enableElement, fire, formSubmitButtonClick, getData, handleConfirm, handleDisabledElement, handleMetaClick, handleMethod, handleRemote, refreshCSRFTokens;
+      var $, CSRFProtection, delegate, disableElement, enableElement, fire, formSubmitButtonClick, getData, handleConfirm, handleDisabledElement, handleMethod, handleRemote, loadCSPNonce, preventInsignificantClick, refreshCSRFTokens;
 
-      fire = Rails.fire, delegate = Rails.delegate, getData = Rails.getData, $ = Rails.$, refreshCSRFTokens = Rails.refreshCSRFTokens, CSRFProtection = Rails.CSRFProtection, enableElement = Rails.enableElement, disableElement = Rails.disableElement, handleDisabledElement = Rails.handleDisabledElement, handleConfirm = Rails.handleConfirm, handleRemote = Rails.handleRemote, formSubmitButtonClick = Rails.formSubmitButtonClick, handleMetaClick = Rails.handleMetaClick, handleMethod = Rails.handleMethod;
+      fire = Rails.fire, delegate = Rails.delegate, getData = Rails.getData, $ = Rails.$, refreshCSRFTokens = Rails.refreshCSRFTokens, CSRFProtection = Rails.CSRFProtection, loadCSPNonce = Rails.loadCSPNonce, enableElement = Rails.enableElement, disableElement = Rails.disableElement, handleDisabledElement = Rails.handleDisabledElement, handleConfirm = Rails.handleConfirm, preventInsignificantClick = Rails.preventInsignificantClick, handleRemote = Rails.handleRemote, formSubmitButtonClick = Rails.formSubmitButtonClick, handleMethod = Rails.handleMethod;
 
-      if ((typeof jQuery !== "undefined" && jQuery !== null) && (jQuery.ajax != null) && !jQuery.rails) {
+      if ((typeof jQuery !== "undefined" && jQuery !== null) && (jQuery.ajax != null)) {
+        if (jQuery.rails) {
+          throw new Error('If you load both jquery_ujs and rails-ujs, use rails-ujs only.');
+        }
         jQuery.rails = Rails;
         jQuery.ajaxPrefilter(function(options, originalOptions, xhr) {
           if (!options.crossDomain) {
@@ -640,12 +698,13 @@ Released under the MIT license
         delegate(document, Rails.linkDisableSelector, 'ajax:stopped', enableElement);
         delegate(document, Rails.buttonDisableSelector, 'ajax:complete', enableElement);
         delegate(document, Rails.buttonDisableSelector, 'ajax:stopped', enableElement);
+        delegate(document, Rails.linkClickSelector, 'click', preventInsignificantClick);
         delegate(document, Rails.linkClickSelector, 'click', handleDisabledElement);
         delegate(document, Rails.linkClickSelector, 'click', handleConfirm);
-        delegate(document, Rails.linkClickSelector, 'click', handleMetaClick);
         delegate(document, Rails.linkClickSelector, 'click', disableElement);
         delegate(document, Rails.linkClickSelector, 'click', handleRemote);
         delegate(document, Rails.linkClickSelector, 'click', handleMethod);
+        delegate(document, Rails.buttonClickSelector, 'click', preventInsignificantClick);
         delegate(document, Rails.buttonClickSelector, 'click', handleDisabledElement);
         delegate(document, Rails.buttonClickSelector, 'click', handleConfirm);
         delegate(document, Rails.buttonClickSelector, 'click', disableElement);
@@ -663,10 +722,12 @@ Released under the MIT license
         });
         delegate(document, Rails.formSubmitSelector, 'ajax:send', disableElement);
         delegate(document, Rails.formSubmitSelector, 'ajax:complete', enableElement);
+        delegate(document, Rails.formInputClickSelector, 'click', preventInsignificantClick);
         delegate(document, Rails.formInputClickSelector, 'click', handleDisabledElement);
         delegate(document, Rails.formInputClickSelector, 'click', handleConfirm);
         delegate(document, Rails.formInputClickSelector, 'click', formSubmitButtonClick);
         document.addEventListener('DOMContentLoaded', refreshCSRFTokens);
+        document.addEventListener('DOMContentLoaded', loadCSPNonce);
         return window._rails_loaded = true;
       };
 
